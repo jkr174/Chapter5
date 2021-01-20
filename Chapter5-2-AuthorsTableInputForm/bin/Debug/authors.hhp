@@ -1,0 +1,14 @@
+[OPTIONS]
+Compatibility=1.1 or later
+Compiled file=authors.chm
+Default topic=authors.htm
+Display compile progress=No
+Language=0x409 English (United States)
+Title=Authors Input Form Help
+
+
+[FILES]
+authors.htm
+
+[INFOTYPES]
+

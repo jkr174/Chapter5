@@ -43,6 +43,8 @@
             this.btnDelete = new System.Windows.Forms.Button();
             this.btnDone = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.hlpAuthors = new System.Windows.Forms.HelpProvider();
+            this.btnHelp = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -202,11 +204,23 @@
             this.pictureBox1.TabIndex = 14;
             this.pictureBox1.TabStop = false;
             // 
+            // btnHelp
+            // 
+            this.btnHelp.Location = new System.Drawing.Point(258, 268);
+            this.btnHelp.Name = "btnHelp";
+            this.btnHelp.Size = new System.Drawing.Size(75, 23);
+            this.btnHelp.TabIndex = 15;
+            this.btnHelp.TabStop = false;
+            this.btnHelp.Text = "&Help";
+            this.btnHelp.UseVisualStyleBackColor = true;
+            this.btnHelp.Click += new System.EventHandler(this.btnHelp_Click);
+            // 
             // frmAuthors
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(432, 279);
+            this.ClientSize = new System.Drawing.Size(432, 313);
+            this.Controls.Add(this.btnHelp);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.btnDone);
             this.Controls.Add(this.btnDelete);
@@ -223,9 +237,12 @@
             this.Controls.Add(this.txtAuthorID);
             this.Controls.Add(this.label1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.hlpAuthors.SetHelpNavigator(this, System.Windows.Forms.HelpNavigator.TableOfContents);
             this.Name = "frmAuthors";
+            this.hlpAuthors.SetShowHelp(this, true);
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Authors";
+            this.HelpButtonClicked += new System.ComponentModel.CancelEventHandler(this.frmAuthors_HelpButtonClicked);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmAuthors_FormClosing);
             this.Load += new System.EventHandler(this.frmAuthors_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
@@ -251,6 +268,8 @@
         private System.Windows.Forms.Button btnDelete;
         private System.Windows.Forms.Button btnDone;
         private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.HelpProvider hlpAuthors;
+        private System.Windows.Forms.Button btnHelp;
     }
 }
 

@@ -37,6 +37,8 @@ namespace Chapter5_2_AuthorsTableInputForm
         {
             try
             {
+                hlpAuthors.HelpNamespace = Application.StartupPath + "\\authors.chm";
+
                 booksConnection = new SqlConnection("Data Source=.\\SQLEXPRESS;" +
                     "AttachDbFilename=c:\\VCSDB\\Working\\SQLBooksDB.mdf;" +
                     "Integrated Security=True;" +
@@ -270,6 +272,16 @@ namespace Chapter5_2_AuthorsTableInputForm
             {
                 txtYearBorn.Focus();
             }
+        }
+
+        private void frmAuthors_HelpButtonClicked(object sender, CancelEventArgs e)
+        {
+
+        }
+
+        private void btnHelp_Click(object sender, EventArgs e)
+        {
+            Help.ShowHelp(this, hlpAuthors.HelpNamespace);
         }
     }
 }
