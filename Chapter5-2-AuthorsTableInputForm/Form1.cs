@@ -19,10 +19,10 @@ namespace Chapter5_2_AuthorsTableInputForm
     public partial class frmAuthors : Form
     {
         SqlConnection booksConnection;
-        SqlCommand authorsCommand;
-        SqlDataAdapter authorsAdapter;
-        DataTable authorsTable;
-        CurrencyManager authorsManager;
+        SqlCommand publishersCommand;
+        SqlDataAdapter publishersAdapter;
+        DataTable publishersTable;
+        CurrencyManager publishersManager;
         public frmAuthors()
         {
             InitializeComponent();
@@ -37,7 +37,7 @@ namespace Chapter5_2_AuthorsTableInputForm
         {
             try
             {
-                hlpAuthors.HelpNamespace = Application.StartupPath + "\\authors.chm";
+                hlpPublishers.HelpNamespace = Application.StartupPath + "\\Publishers.chm";
 
                 booksConnection = new SqlConnection("Data Source=.\\SQLEXPRESS;" +
                     "AttachDbFilename=c:\\VCSDB\\Working\\SQLBooksDB.mdf;" +
@@ -46,24 +46,34 @@ namespace Chapter5_2_AuthorsTableInputForm
                     "User Instance=True");
                 booksConnection.Open();
 
-                authorsCommand = new SqlCommand("Select * from Authors ORDER BY Author", booksConnection);
+                publishersCommand = new SqlCommand(
+                    "SELECT * " +
+                    "FROM Publishers " +
+                    "ORDER BY Name", booksConnection);
 
-                authorsAdapter = new SqlDataAdapter();
-                authorsAdapter.SelectCommand = authorsCommand;
-                authorsTable = new DataTable();
-                authorsAdapter.Fill(authorsTable);
+                publishersAdapter = new SqlDataAdapter();
+                publishersAdapter.SelectCommand = publishersCommand;
+                publishersTable = new DataTable();
+                publishersAdapter.Fill(publishersTable);
 
-                txtAuthorID.DataBindings.Add("Text", authorsTable, "Au_ID");
-                txtAuthorName.DataBindings.Add("Text", authorsTable, "Author");
-                txtYearBorn.DataBindings.Add("Text", authorsTable, "Year_Born");
+                txtPubID.DataBindings.Add("Text", publishersTable, "PubID");
+                txtPubName.DataBindings.Add("Text", publishersTable, "Name");
+                txtCompanyName.DataBindings.Add("Text", publishersTable, "Company_Name");
+                txtPubAddress.DataBindings.Add("Text", publishersTable, "Address");
+                txtPubCity.DataBindings.Add("Text", publishersTable, "City");
+                txtPubState.DataBindings.Add("Text", publishersTable, "State");
+                txtPubZip.DataBindings.Add("Text", publishersTable, "Zip");
+                txtPubTelephone.DataBindings.Add("Text", publishersTable, "Telephone");
+                txtPubFAX.DataBindings.Add("Text", publishersTable, "FAX");
+                txtPubComments.DataBindings.Add("Text", publishersTable, "Comments");
 
-                authorsManager = (CurrencyManager)
-                    this.BindingContext[authorsTable];
+                publishersManager = (CurrencyManager)
+                    this.BindingContext[publishersTable];
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message,
-                    "Error establishing Authors table.",
+                    "Error establishing Publishers table.",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
                 return;
@@ -77,32 +87,32 @@ namespace Chapter5_2_AuthorsTableInputForm
             booksConnection.Close();
 
             booksConnection.Dispose();
-            authorsCommand.Dispose();
-            authorsAdapter.Dispose();
-            authorsTable.Dispose();
+            publishersCommand.Dispose();
+            publishersAdapter.Dispose();
+            publishersTable.Dispose();
         }
 
         private void btnPrevious_Click(object sender, EventArgs e)
         {
-            if (authorsManager.Position == 0)
+            if (publishersManager.Position == 0)
             {
                 Console.Beep();
             }
-            authorsManager.Position--;
+            publishersManager.Position--;
         }
 
         private void btnNext_Click(object sender, EventArgs e)
         {
-            if (authorsManager.Position == authorsManager.Count - 1)
+            if (publishersManager.Position == publishersManager.Count - 1)
             {
                 Console.Beep();
             }
-            authorsManager.Position++;
+            publishersManager.Position++;
         }
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            if (!ValidateDate())
+            if (!ValidateData())
             {
                 return;
             }
@@ -158,10 +168,17 @@ namespace Chapter5_2_AuthorsTableInputForm
             switch (appState)
             {
                 case "View":
-                    txtAuthorID.BackColor = Color.White;
-                    txtAuthorID.ForeColor = Color.Black;
-                    txtAuthorName.ReadOnly = true;
-                    txtYearBorn.ReadOnly = true;
+                    txtPubID.BackColor = Color.White;
+                    txtPubID.ForeColor = Color.Black;
+                    txtPubName.ReadOnly = true;
+                    txtCompanyName.ReadOnly = true;
+                    txtPubAddress.ReadOnly = true;
+                    txtPubCity.ReadOnly = true;
+                    txtPubState.ReadOnly = true;
+                    txtPubZip.ReadOnly = true;
+                    txtPubTelephone.ReadOnly = true;
+                    txtPubFAX.ReadOnly = true;
+                    txtPubComments.ReadOnly = true;
                     btnPrevious.Enabled = true;
                     btnNext.Enabled = true;
                     btnAddNew.Enabled = true;
@@ -170,14 +187,21 @@ namespace Chapter5_2_AuthorsTableInputForm
                     btnEdit.Enabled = true;
                     btnDelete.Enabled = true;
                     btnDone.Enabled = true;
-                    txtAuthorName.Focus();
+                    txtPubName.Focus();
                     break;
                 //Add or Edit State
                 default:
-                    txtAuthorID.BackColor = Color.Red;
-                    txtAuthorID.ForeColor = Color.White;
-                    txtAuthorName.ReadOnly = false;
-                    txtYearBorn.ReadOnly = false;
+                    txtPubID.BackColor = Color.Red;
+                    txtPubID.ForeColor = Color.White;
+                    txtPubName.ReadOnly = false;
+                    txtCompanyName.ReadOnly = false;
+                    txtPubAddress.ReadOnly = false;
+                    txtPubCity.ReadOnly = false;
+                    txtPubState.ReadOnly = false;
+                    txtPubZip.ReadOnly = false;
+                    txtPubTelephone.ReadOnly = false;
+                    txtPubFAX.ReadOnly = false;
+                    txtPubComments.ReadOnly = false;
                     btnPrevious.Enabled = false;
                     btnNext.Enabled = false;
                     btnAddNew.Enabled = false;
@@ -186,7 +210,7 @@ namespace Chapter5_2_AuthorsTableInputForm
                     btnEdit.Enabled = false;
                     btnDelete.Enabled = false;
                     btnDone.Enabled = false;
-                    txtAuthorName.Focus();
+                    txtPubName.Focus();
                     break;
             }
         }
@@ -224,7 +248,7 @@ namespace Chapter5_2_AuthorsTableInputForm
             }
             else if((int)e.KeyChar == 13)
             {
-                txtAuthorName.Focus();
+                txtPubName.Focus();
             }
             else
             {
@@ -232,34 +256,22 @@ namespace Chapter5_2_AuthorsTableInputForm
                 Console.Beep();
             }
         }
-        private bool ValidateDate()
+        private bool ValidateData()
         {
             string message = "";
-            int inputYear, currentYear;
             bool allOK = true;
 
-            if (txtAuthorName.Text.Trim().Equals(""))
+            if (txtPubName.Text.Trim().Equals(""))
             {
-                message = "You must enter an Author Name." + "\r\n";
-                txtAuthorName.Focus();
+                message = "You must enter a Publisher Name." + "\r\n";
+                txtPubName.Focus();
                 allOK = false;
-            }
-            if (!txtYearBorn.Text.Trim().Equals(""))
-            {
-                inputYear = Convert.ToInt32(txtYearBorn.Text);
-                currentYear = DateTime.Now.Year;
-                if (inputYear > currentYear || inputYear < currentYear - 150)
-                {
-                    message += "Year born must be between " +
-                        (currentYear - 150).ToString() + " and " +
-                        currentYear.ToString() + ".";
-                    txtYearBorn.Focus();
-                    allOK = false;
-                }
             }
             if (!allOK)
             {
-                MessageBox.Show(message, "Validation Error",
+                MessageBox.Show(
+                    message, 
+                    "Validation Error",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Information);
             }
@@ -268,10 +280,6 @@ namespace Chapter5_2_AuthorsTableInputForm
 
         private void txtAuthorName_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if((int) e.KeyChar == 13)
-            {
-                txtYearBorn.Focus();
-            }
         }
 
         private void frmAuthors_HelpButtonClicked(object sender, CancelEventArgs e)
@@ -281,7 +289,7 @@ namespace Chapter5_2_AuthorsTableInputForm
 
         private void btnHelp_Click(object sender, EventArgs e)
         {
-            Help.ShowHelp(this, hlpAuthors.HelpNamespace);
+            Help.ShowHelp(this, hlpPublishers.HelpNamespace);
         }
     }
 }
