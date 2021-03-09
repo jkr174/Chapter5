@@ -87,9 +87,6 @@ namespace Chapter5_2_AuthorsTableInputForm
                 cboPublisher.DisplayMember = "Name";
                 cboPublisher.ValueMember = "PubID";
                 cboPublisher.DataBindings.Add("SelectedValue", titlesTable, "PubID");
-                SqlConnectionStringBuilder connectionString = new SqlConnectionStringBuilder();
-                var database = connectionString.InitialCatalog;
-                MessageBox.Show(database, "Database Name", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
             }
             catch (Exception ex)

@@ -62,6 +62,7 @@
             this.label9 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.btnPublishers = new System.Windows.Forms.Button();
+            this.lblTitle = new System.Windows.Forms.Label();
             this.grpFindTitle.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -396,11 +397,22 @@
             this.btnPublishers.UseVisualStyleBackColor = true;
             this.btnPublishers.Click += new System.EventHandler(this.btnPublishers_Click);
             // 
+            // lblTitle
+            // 
+            this.lblTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTitle.Location = new System.Drawing.Point(121, 12);
+            this.lblTitle.Name = "lblTitle";
+            this.lblTitle.Size = new System.Drawing.Size(338, 65);
+            this.lblTitle.TabIndex = 31;
+            this.lblTitle.Text = "Titles Form";
+            this.lblTitle.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            // 
             // frmTitles
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(476, 484);
+            this.Controls.Add(this.lblTitle);
             this.Controls.Add(this.btnPublishers);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.cboPublisher);
@@ -484,6 +496,7 @@
         private System.Windows.Forms.ComboBox cboPublisher;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Button btnPublishers;
+        private System.Windows.Forms.Label lblTitle;
     }
 }
 

@@ -40,7 +40,6 @@
             this.btnAddNew = new System.Windows.Forms.Button();
             this.btnDelete = new System.Windows.Forms.Button();
             this.btnDone = new System.Windows.Forms.Button();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.hlpPublishers = new System.Windows.Forms.HelpProvider();
             this.btnHelp = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
@@ -61,10 +60,12 @@
             this.txtPubComments = new System.Windows.Forms.TextBox();
             this.btnFirst = new System.Windows.Forms.Button();
             this.btnLast = new System.Windows.Forms.Button();
-            this.grpFindPublisher = new System.Windows.Forms.GroupBox();
-            this.btnFind = new System.Windows.Forms.Button();
-            this.txtFind = new System.Windows.Forms.TextBox();
+            this.lblTitle = new System.Windows.Forms.Label();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.label11 = new System.Windows.Forms.Label();
+            this.txtFind = new System.Windows.Forms.TextBox();
+            this.btnFind = new System.Windows.Forms.Button();
+            this.grpFindPublisher = new System.Windows.Forms.GroupBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.grpFindPublisher.SuspendLayout();
             this.SuspendLayout();
@@ -194,16 +195,6 @@
             this.btnDone.Text = "Do&ne";
             this.btnDone.UseVisualStyleBackColor = true;
             this.btnDone.Click += new System.EventHandler(this.btnDone_Click);
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Image = global::Chapter5_2_AuthorsTableInputForm.Properties.Resources.books;
-            this.pictureBox1.Location = new System.Drawing.Point(15, 12);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(100, 65);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox1.TabIndex = 14;
-            this.pictureBox1.TabStop = false;
             // 
             // btnHelp
             // 
@@ -384,17 +375,43 @@
             this.btnLast.UseVisualStyleBackColor = true;
             this.btnLast.Click += new System.EventHandler(this.btnLast_Click);
             // 
-            // grpFindPublisher
+            // lblTitle
             // 
-            this.grpFindPublisher.Controls.Add(this.btnFind);
-            this.grpFindPublisher.Controls.Add(this.txtFind);
-            this.grpFindPublisher.Controls.Add(this.label11);
-            this.grpFindPublisher.Location = new System.Drawing.Point(12, 448);
-            this.grpFindPublisher.Name = "grpFindPublisher";
-            this.grpFindPublisher.Size = new System.Drawing.Size(249, 86);
-            this.grpFindPublisher.TabIndex = 33;
-            this.grpFindPublisher.TabStop = false;
-            this.grpFindPublisher.Text = "Find Publisher";
+            this.lblTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTitle.Location = new System.Drawing.Point(121, 12);
+            this.lblTitle.Name = "lblTitle";
+            this.lblTitle.Size = new System.Drawing.Size(327, 65);
+            this.lblTitle.TabIndex = 34;
+            this.lblTitle.Text = "Publishers Form";
+            this.lblTitle.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = global::Chapter5_2_AuthorsTableInputForm.Properties.Resources.books;
+            this.pictureBox1.Location = new System.Drawing.Point(15, 12);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(100, 65);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.TabIndex = 14;
+            this.pictureBox1.TabStop = false;
+            // 
+            // label11
+            // 
+            this.label11.Location = new System.Drawing.Point(6, 22);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(111, 26);
+            this.label11.TabIndex = 0;
+            this.label11.Text = "Type first few letters of Publisher Name";
+            this.label11.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            // 
+            // txtFind
+            // 
+            this.txtFind.BackColor = System.Drawing.Color.White;
+            this.txtFind.Location = new System.Drawing.Point(123, 19);
+            this.txtFind.Name = "txtFind";
+            this.txtFind.Size = new System.Drawing.Size(108, 20);
+            this.txtFind.TabIndex = 28;
+            this.txtFind.TabStop = false;
             // 
             // btnFind
             // 
@@ -407,29 +424,24 @@
             this.btnFind.UseVisualStyleBackColor = true;
             this.btnFind.Click += new System.EventHandler(this.btnFind_Click);
             // 
-            // txtFind
+            // grpFindPublisher
             // 
-            this.txtFind.BackColor = System.Drawing.Color.White;
-            this.txtFind.Location = new System.Drawing.Point(123, 19);
-            this.txtFind.Name = "txtFind";
-            this.txtFind.Size = new System.Drawing.Size(108, 20);
-            this.txtFind.TabIndex = 28;
-            this.txtFind.TabStop = false;
-            // 
-            // label11
-            // 
-            this.label11.Location = new System.Drawing.Point(6, 22);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(111, 26);
-            this.label11.TabIndex = 0;
-            this.label11.Text = "Type first few letters of Publisher Name";
-            this.label11.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.grpFindPublisher.Controls.Add(this.btnFind);
+            this.grpFindPublisher.Controls.Add(this.txtFind);
+            this.grpFindPublisher.Controls.Add(this.label11);
+            this.grpFindPublisher.Location = new System.Drawing.Point(12, 449);
+            this.grpFindPublisher.Name = "grpFindPublisher";
+            this.grpFindPublisher.Size = new System.Drawing.Size(249, 86);
+            this.grpFindPublisher.TabIndex = 33;
+            this.grpFindPublisher.TabStop = false;
+            this.grpFindPublisher.Text = "Find Publisher";
             // 
             // frmPublishers
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(460, 549);
+            this.Controls.Add(this.lblTitle);
             this.Controls.Add(this.grpFindPublisher);
             this.Controls.Add(this.btnLast);
             this.Controls.Add(this.btnFirst);
@@ -468,7 +480,7 @@
             this.Name = "frmPublishers";
             this.hlpPublishers.SetShowHelp(this, true);
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Authors";
+            this.Text = "Publishers";
             this.HelpButtonClicked += new System.ComponentModel.CancelEventHandler(this.frmAuthors_HelpButtonClicked);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmAuthors_FormClosing);
             this.Load += new System.EventHandler(this.frmAuthors_Load);
@@ -515,10 +527,11 @@
         private System.Windows.Forms.TextBox txtPubComments;
         private System.Windows.Forms.Button btnFirst;
         private System.Windows.Forms.Button btnLast;
-        private System.Windows.Forms.GroupBox grpFindPublisher;
-        private System.Windows.Forms.Button btnFind;
-        private System.Windows.Forms.TextBox txtFind;
+        private System.Windows.Forms.Label lblTitle;
         private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.TextBox txtFind;
+        private System.Windows.Forms.Button btnFind;
+        private System.Windows.Forms.GroupBox grpFindPublisher;
     }
 }
 
