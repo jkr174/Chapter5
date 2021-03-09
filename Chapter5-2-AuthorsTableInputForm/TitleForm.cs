@@ -17,16 +17,19 @@ using System.Windows.Forms;
 
 namespace Chapter5_2_AuthorsTableInputForm
 {
-    public partial class frmAuthors : Form
+    public partial class frmTitles : Form
     {
-        SqlConnection booksConnection;
         SqlCommand publishersCommand;
         SqlDataAdapter publishersAdapter;
-        DataTable publishersTable;
-        CurrencyManager publishersManager;
+        DataTable publisherTable;
+        SqlConnection booksConnection;
+        SqlCommand titlesCommand;
+        SqlDataAdapter titlesAdapter;
+        DataTable titlesTable;
+        CurrencyManager titlesManager;
         string myState;
         int myBookmark;
-        public frmAuthors()
+        public frmTitles()
         {
             InitializeComponent();
         }
@@ -38,6 +41,7 @@ namespace Chapter5_2_AuthorsTableInputForm
 
         private void frmAuthors_Load(object sender, EventArgs e)
         {
+            
             var fileContent = string.Empty;
             var filePath = string.Empty;
             // Method of opening the database file needed for the program to function.
@@ -70,29 +74,39 @@ namespace Chapter5_2_AuthorsTableInputForm
                         "User Instance=False");
                         booksConnection.Open();
 
-                        publishersCommand = new SqlCommand(
+                        titlesCommand = new SqlCommand(
                             "SELECT * " +
-                            "FROM Publishers " +
-                            "ORDER BY Name", booksConnection);
+                            "FROM Titles " +
+                            "ORDER BY Title", booksConnection);
 
+                        titlesAdapter = new SqlDataAdapter();
+                        titlesAdapter.SelectCommand = titlesCommand;
+                        titlesTable = new DataTable();
+                        titlesAdapter.Fill(titlesTable);
+
+                        txtTitle.DataBindings.Add("Text", titlesTable, "Title");
+                        txtYear.DataBindings.Add("Text", titlesTable, "Year_Published");
+                        txtISBN.DataBindings.Add("Text", titlesTable, "ISBN");
+                        txtDescription.DataBindings.Add("Text", titlesTable, "Description");
+                        txtNotes.DataBindings.Add("Text", titlesTable, "Notes");
+                        txtSubject.DataBindings.Add("Text", titlesTable, "Subject");
+                        txtComments.DataBindings.Add("Text", titlesTable, "Comments");
+
+                        titlesManager = (CurrencyManager)
+                            this.BindingContext[titlesTable];
+
+                        publishersCommand = new SqlCommand("SELECT *" +
+                            "FROM Publishers " +
+                            "ORDER BY Name",
+                            booksConnection);
                         publishersAdapter = new SqlDataAdapter();
                         publishersAdapter.SelectCommand = publishersCommand;
-                        publishersTable = new DataTable();
-                        publishersAdapter.Fill(publishersTable);
-
-                        txtPubID.DataBindings.Add("Text", publishersTable, "PubID");
-                        txtPubName.DataBindings.Add("Text", publishersTable, "Name");
-                        txtCompanyName.DataBindings.Add("Text", publishersTable, "Company_Name");
-                        txtPubAddress.DataBindings.Add("Text", publishersTable, "Address");
-                        txtPubCity.DataBindings.Add("Text", publishersTable, "City");
-                        txtPubState.DataBindings.Add("Text", publishersTable, "State");
-                        txtPubZip.DataBindings.Add("Text", publishersTable, "Zip");
-                        txtPubTelephone.DataBindings.Add("Text", publishersTable, "Telephone");
-                        txtPubFAX.DataBindings.Add("Text", publishersTable, "FAX");
-                        txtPubComments.DataBindings.Add("Text", publishersTable, "Comments");
-
-                        publishersManager = (CurrencyManager)
-                            this.BindingContext[publishersTable];
+                        publisherTable = new DataTable();
+                        publishersAdapter.Fill(publisherTable);
+                        cboPublisher.DataSource = publisherTable;
+                        cboPublisher.DisplayMember = "Name";
+                        cboPublisher.ValueMember = "PubID";
+                        cboPublisher.DataBindings.Add("SelectedValue", titlesTable, "PubID");
                     }
                     catch (Exception ex)
                     {
@@ -106,6 +120,7 @@ namespace Chapter5_2_AuthorsTableInputForm
                     
                     this.Show();
                     SetState("View");
+                    SetText();
                 }
             }
         }
@@ -124,8 +139,8 @@ namespace Chapter5_2_AuthorsTableInputForm
             {
                 try
                 {
-                    SqlCommandBuilder publishersAdapterCommands = new SqlCommandBuilder(publishersAdapter);
-                    publishersAdapter.Update(publishersTable);
+                    SqlCommandBuilder publishersAdapterCommands = new SqlCommandBuilder(titlesAdapter);
+                    titlesAdapter.Update(titlesTable);
 
                 }
                 catch (Exception ex)
@@ -139,28 +154,33 @@ namespace Chapter5_2_AuthorsTableInputForm
                 booksConnection.Close();
 
                 booksConnection.Dispose();
+                titlesCommand.Dispose();
+                titlesAdapter.Dispose();
+                titlesTable.Dispose();
                 publishersCommand.Dispose();
                 publishersAdapter.Dispose();
-                publishersTable.Dispose();
+                publisherTable.Dispose();
             }
         }
 
         private void btnPrevious_Click(object sender, EventArgs e)
         {
-            if (publishersManager.Position == 0)
+            if (titlesManager.Position == 0)
             {
                 Console.Beep();
             }
-            publishersManager.Position--;
+            titlesManager.Position--;
+            SetText();
         }
 
         private void btnNext_Click(object sender, EventArgs e)
         {
-            if (publishersManager.Position == publishersManager.Count - 1)
+            if (titlesManager.Position == titlesManager.Count - 1)
             {
                 Console.Beep();
             }
-            publishersManager.Position++;
+            titlesManager.Position++;
+            SetText();
         }
 
         private void btnSave_Click(object sender, EventArgs e)
@@ -169,14 +189,14 @@ namespace Chapter5_2_AuthorsTableInputForm
             {
                 return;
             }
-            string savedName = txtPubName.Text;
+            string savedName = txtYear.Text;
             int savedRow;
             try
             {
-                publishersManager.EndCurrentEdit();
-                publishersTable.DefaultView.Sort = "Name";
-                savedRow = publishersTable.DefaultView.Find(savedName);
-                publishersManager.Position = savedRow;
+                titlesManager.EndCurrentEdit();
+                titlesTable.DefaultView.Sort = "Name";
+                savedRow = titlesTable.DefaultView.Find(savedName);
+                titlesManager.Position = savedRow;
                 string Message = "Record saved.",
                 Title = "Save";
 
@@ -213,7 +233,7 @@ namespace Chapter5_2_AuthorsTableInputForm
             }
             try
             {
-                publishersManager.RemoveAt(publishersManager.Position);
+                titlesManager.RemoveAt(titlesManager.Position);
             }
             catch (Exception ex)
             {
@@ -229,49 +249,62 @@ namespace Chapter5_2_AuthorsTableInputForm
             switch (appState)
             {
                 case "View":
-                    txtPubID.BackColor = Color.White;
-                    txtPubID.ForeColor = Color.Black;
-                    txtPubName.ReadOnly = true;
-                    txtCompanyName.ReadOnly = true;
-                    txtPubAddress.ReadOnly = true;
-                    txtPubCity.ReadOnly = true;
-                    txtPubState.ReadOnly = true;
-                    txtPubZip.ReadOnly = true;
-                    txtPubTelephone.ReadOnly = true;
-                    txtPubFAX.ReadOnly = true;
-                    txtPubComments.ReadOnly = true;
-                    btnPrevious.Enabled = true;
-                    btnNext.Enabled = true;
-                    btnAddNew.Enabled = true;
-                    btnSave.Enabled = false;
-                    btnCancel.Enabled = false;
-                    btnEdit.Enabled = true;
-                    btnDelete.Enabled = true;
+                    txtTitle.ReadOnly = true; 
+                    txtYear.ReadOnly = true; 
+                    txtISBN.ReadOnly = true; 
+                    txtISBN.BackColor = Color.White; 
+                    txtISBN.ForeColor = Color.Black; 
+                    txtDescription.ReadOnly = true; 
+                    txtNotes.ReadOnly = true; 
+                    txtSubject.ReadOnly = true; 
+                    txtComments.ReadOnly = true; 
+                    btnFirst.Enabled = true; 
+                    btnPrevious.Enabled = true; 
+                    btnNext.Enabled = true; 
+                    btnLast.Enabled = true; 
+                    btnAddNew.Enabled = true; 
+                    btnSave.Enabled = false; 
+                    btnCancel.Enabled = false; 
+                    btnEdit.Enabled = true; 
+                    btnDelete.Enabled = true; 
                     btnDone.Enabled = true;
-                    txtPubName.Focus();
+                    grpFindTitle.Enabled = true;
+                    cboPublisher.Enabled = false;
+                    txtTitle.Focus();
                     break;
                 //Add or Edit State
                 default:
-                    txtPubID.BackColor = Color.Red;
-                    txtPubID.ForeColor = Color.White;
-                    txtPubName.ReadOnly = false;
-                    txtCompanyName.ReadOnly = false;
-                    txtPubAddress.ReadOnly = false;
-                    txtPubCity.ReadOnly = false;
-                    txtPubState.ReadOnly = false;
-                    txtPubZip.ReadOnly = false;
-                    txtPubTelephone.ReadOnly = false;
-                    txtPubFAX.ReadOnly = false;
-                    txtPubComments.ReadOnly = false;
-                    btnPrevious.Enabled = false;
-                    btnNext.Enabled = false;
-                    btnAddNew.Enabled = false;
-                    btnSave.Enabled = true;
-                    btnCancel.Enabled = true;
-                    btnEdit.Enabled = false;
-                    btnDelete.Enabled = false;
+                    txtTitle.ReadOnly = false; 
+                    txtYear.ReadOnly = false; 
+                    txtISBN.ReadOnly = false; 
+                    if (myState.Equals("Edit")) 
+                    { 
+                        txtISBN.BackColor = Color.Red; 
+                        txtISBN.ForeColor = Color.White; 
+                        txtISBN.ReadOnly = true; 
+                        txtISBN.TabStop = false; 
+                    } 
+                    else 
+                    { 
+                        txtISBN.TabStop = true; 
+                    }
+                    txtDescription.ReadOnly = false; 
+                    txtNotes.ReadOnly = false; 
+                    txtSubject.ReadOnly = false;
+                    txtComments.ReadOnly = false; 
+                    btnFirst.Enabled = false; 
+                    btnPrevious.Enabled = false; 
+                    btnNext.Enabled = false; 
+                    btnLast.Enabled = false; 
+                    btnAddNew.Enabled = false; 
+                    btnSave.Enabled = true; 
+                    btnCancel.Enabled = true; 
+                    btnEdit.Enabled = false; 
+                    btnDelete.Enabled = false; 
                     btnDone.Enabled = false;
-                    txtPubName.Focus();
+                    grpFindTitle.Enabled = false;
+                    cboPublisher.Enabled = true;
+                    txtTitle.Focus();
                     break;
             }
         }
@@ -280,8 +313,8 @@ namespace Chapter5_2_AuthorsTableInputForm
         {
             try
             {
-                myBookmark = publishersManager.Position;
-                publishersManager.AddNew();
+                myBookmark = titlesManager.Position;
+                titlesManager.AddNew();
                 SetState("Add");
             }
             catch (Exception ex)
@@ -300,9 +333,9 @@ namespace Chapter5_2_AuthorsTableInputForm
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
-            publishersManager.CancelCurrentEdit();
+            titlesManager.CancelCurrentEdit();
             if (myState.Equals("Add"))
-                publishersManager.Position = myBookmark;
+                titlesManager.Position = myBookmark;
             SetState("View");
         }
 
@@ -314,7 +347,7 @@ namespace Chapter5_2_AuthorsTableInputForm
             }
             else if((int)e.KeyChar == 13)
             {
-                txtPubName.Focus();
+                txtYear.Focus();
             }
             else
             {
@@ -326,21 +359,6 @@ namespace Chapter5_2_AuthorsTableInputForm
         {
             string message = "";
             bool allOK = true;
-
-            if (txtPubName.Text.Trim().Equals(""))
-            {
-                message = "You must enter a Publisher Name." + "\r\n";
-                txtPubName.Focus();
-                allOK = false;
-            }
-            if (!allOK)
-            {
-                MessageBox.Show(
-                    message, 
-                    "Validation Error",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Information);
-            }
             return (allOK);
         }
 
@@ -356,6 +374,46 @@ namespace Chapter5_2_AuthorsTableInputForm
         private void btnHelp_Click(object sender, EventArgs e)
         {
             Help.ShowHelp(this, hlpPublishers.HelpNamespace);
+        }
+
+        private void btnFirst_Click(object sender, EventArgs e)
+        {
+            titlesManager.Position = 0;
+            SetText();
+        }
+
+        private void btnLast_Click(object sender, EventArgs e)
+        {
+            titlesManager.Position = titlesManager.Count - 1;
+            SetText();
+        }
+
+        private void btnFind_Click(object sender, EventArgs e)
+        {
+            if(txtFind.Text.Equals(""))
+            {
+                return;
+            }
+            int savedRow = titlesManager.Position;
+            DataRow[] foundRows;
+            titlesTable.DefaultView.Sort = "Title";
+            foundRows = titlesTable.Select("Title LIKE'" +
+                txtFind.Text + "*'");
+            if (foundRows.Length == 0)
+            {
+                titlesManager.Position = savedRow;
+            }
+            else
+            {
+                titlesManager.Position = titlesTable.DefaultView.Find(foundRows[0]["Title"]);
+            }
+            SetText();
+        }
+        private void SetText()
+        {
+            this.Text = "Titles - Record " + (titlesManager.Position
+                + 1).ToString() + " of " + titlesManager.Count.ToString()
+                + " Records";
         }
     }
 }
