@@ -40,7 +40,6 @@
             this.btnAddNew = new System.Windows.Forms.Button();
             this.btnDelete = new System.Windows.Forms.Button();
             this.btnDone = new System.Windows.Forms.Button();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.hlpPublishers = new System.Windows.Forms.HelpProvider();
             this.btnHelp = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
@@ -56,13 +55,17 @@
             this.btnLast = new System.Windows.Forms.Button();
             this.btnFirst = new System.Windows.Forms.Button();
             this.grpFindTitle = new System.Windows.Forms.GroupBox();
-            this.label8 = new System.Windows.Forms.Label();
-            this.txtFind = new System.Windows.Forms.TextBox();
             this.btnFind = new System.Windows.Forms.Button();
+            this.txtFind = new System.Windows.Forms.TextBox();
+            this.label8 = new System.Windows.Forms.Label();
             this.cboPublisher = new System.Windows.Forms.ComboBox();
             this.label9 = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.btnPublishers = new System.Windows.Forms.Button();
+            this.btnConnect = new System.Windows.Forms.Button();
+            this.btnDisconnect = new System.Windows.Forms.Button();
             this.grpFindTitle.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -137,7 +140,7 @@
             // 
             // btnSave
             // 
-            this.btnSave.Location = new System.Drawing.Point(261, 391);
+            this.btnSave.Location = new System.Drawing.Point(222, 391);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(75, 23);
             this.btnSave.TabIndex = 9;
@@ -148,7 +151,7 @@
             // 
             // btnCancel
             // 
-            this.btnCancel.Location = new System.Drawing.Point(384, 391);
+            this.btnCancel.Location = new System.Drawing.Point(303, 391);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
             this.btnCancel.TabIndex = 10;
@@ -170,7 +173,7 @@
             // 
             // btnDelete
             // 
-            this.btnDelete.Location = new System.Drawing.Point(261, 420);
+            this.btnDelete.Location = new System.Drawing.Point(222, 420);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(75, 23);
             this.btnDelete.TabIndex = 12;
@@ -181,7 +184,7 @@
             // 
             // btnDone
             // 
-            this.btnDone.Location = new System.Drawing.Point(384, 420);
+            this.btnDone.Location = new System.Drawing.Point(303, 420);
             this.btnDone.Name = "btnDone";
             this.btnDone.Size = new System.Drawing.Size(75, 23);
             this.btnDone.TabIndex = 13;
@@ -190,19 +193,9 @@
             this.btnDone.UseVisualStyleBackColor = true;
             this.btnDone.Click += new System.EventHandler(this.btnDone_Click);
             // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Image = global::Chapter5_2_AuthorsTableInputForm.Properties.Resources.books;
-            this.pictureBox1.Location = new System.Drawing.Point(15, 12);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(100, 65);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox1.TabIndex = 14;
-            this.pictureBox1.TabStop = false;
-            // 
             // btnHelp
             // 
-            this.btnHelp.Location = new System.Drawing.Point(384, 449);
+            this.btnHelp.Location = new System.Drawing.Point(222, 449);
             this.btnHelp.Name = "btnHelp";
             this.btnHelp.Size = new System.Drawing.Size(75, 23);
             this.btnHelp.TabIndex = 15;
@@ -335,24 +328,6 @@
             this.grpFindTitle.TabStop = false;
             this.grpFindTitle.Text = "Find Title";
             // 
-            // label8
-            // 
-            this.label8.Location = new System.Drawing.Point(6, 16);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(111, 26);
-            this.label8.TabIndex = 0;
-            this.label8.Text = "Type first few letters of Title";
-            this.label8.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            // 
-            // txtFind
-            // 
-            this.txtFind.BackColor = System.Drawing.Color.White;
-            this.txtFind.Location = new System.Drawing.Point(9, 45);
-            this.txtFind.Name = "txtFind";
-            this.txtFind.Size = new System.Drawing.Size(108, 20);
-            this.txtFind.TabIndex = 28;
-            this.txtFind.TabStop = false;
-            // 
             // btnFind
             // 
             this.btnFind.Location = new System.Drawing.Point(9, 71);
@@ -363,6 +338,24 @@
             this.btnFind.Text = "Find";
             this.btnFind.UseVisualStyleBackColor = true;
             this.btnFind.Click += new System.EventHandler(this.btnFind_Click);
+            // 
+            // txtFind
+            // 
+            this.txtFind.BackColor = System.Drawing.Color.White;
+            this.txtFind.Location = new System.Drawing.Point(9, 45);
+            this.txtFind.Name = "txtFind";
+            this.txtFind.Size = new System.Drawing.Size(108, 20);
+            this.txtFind.TabIndex = 28;
+            this.txtFind.TabStop = false;
+            // 
+            // label8
+            // 
+            this.label8.Location = new System.Drawing.Point(6, 16);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(111, 26);
+            this.label8.TabIndex = 0;
+            this.label8.Text = "Type first few letters of Title";
+            this.label8.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // cboPublisher
             // 
@@ -384,11 +377,57 @@
             this.label9.TabIndex = 29;
             this.label9.Text = "Publisher";
             // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = global::Chapter5_2_AuthorsTableInputForm.Properties.Resources.books;
+            this.pictureBox1.Location = new System.Drawing.Point(15, 12);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(100, 65);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.TabIndex = 14;
+            this.pictureBox1.TabStop = false;
+            // 
+            // btnPublishers
+            // 
+            this.btnPublishers.Location = new System.Drawing.Point(141, 449);
+            this.btnPublishers.Name = "btnPublishers";
+            this.btnPublishers.Size = new System.Drawing.Size(75, 23);
+            this.btnPublishers.TabIndex = 30;
+            this.btnPublishers.TabStop = false;
+            this.btnPublishers.Text = "&Publishers";
+            this.btnPublishers.UseVisualStyleBackColor = true;
+            this.btnPublishers.Click += new System.EventHandler(this.btnPublishers_Click);
+            // 
+            // btnConnect
+            // 
+            this.btnConnect.Location = new System.Drawing.Point(384, 391);
+            this.btnConnect.Name = "btnConnect";
+            this.btnConnect.Size = new System.Drawing.Size(75, 23);
+            this.btnConnect.TabIndex = 31;
+            this.btnConnect.TabStop = false;
+            this.btnConnect.Text = "C&onnect";
+            this.btnConnect.UseVisualStyleBackColor = true;
+            this.btnConnect.Click += new System.EventHandler(this.btnConnect_Click);
+            // 
+            // btnDisconnect
+            // 
+            this.btnDisconnect.Location = new System.Drawing.Point(384, 420);
+            this.btnDisconnect.Name = "btnDisconnect";
+            this.btnDisconnect.Size = new System.Drawing.Size(75, 23);
+            this.btnDisconnect.TabIndex = 32;
+            this.btnDisconnect.TabStop = false;
+            this.btnDisconnect.Text = "D&isconnect";
+            this.btnDisconnect.UseVisualStyleBackColor = true;
+            this.btnDisconnect.Click += new System.EventHandler(this.btnDisconnect_Click);
+            // 
             // frmTitles
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(476, 484);
+            this.Controls.Add(this.btnDisconnect);
+            this.Controls.Add(this.btnConnect);
+            this.Controls.Add(this.btnPublishers);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.cboPublisher);
             this.Controls.Add(this.grpFindTitle);
@@ -427,9 +466,9 @@
             this.HelpButtonClicked += new System.ComponentModel.CancelEventHandler(this.frmAuthors_HelpButtonClicked);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmAuthors_FormClosing);
             this.Load += new System.EventHandler(this.frmAuthors_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.grpFindTitle.ResumeLayout(false);
             this.grpFindTitle.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -470,6 +509,9 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.ComboBox cboPublisher;
         private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Button btnPublishers;
+        private System.Windows.Forms.Button btnConnect;
+        private System.Windows.Forms.Button btnDisconnect;
     }
 }
 

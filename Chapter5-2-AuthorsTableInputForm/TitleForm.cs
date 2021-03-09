@@ -21,7 +21,7 @@ namespace Chapter5_2_AuthorsTableInputForm
     {
         SqlCommand publishersCommand;
         SqlDataAdapter publishersAdapter;
-        DataTable publisherTable;
+        DataTable publishersTable;
         SqlConnection booksConnection;
         SqlCommand titlesCommand;
         SqlDataAdapter titlesAdapter;
@@ -41,88 +41,8 @@ namespace Chapter5_2_AuthorsTableInputForm
 
         private void frmAuthors_Load(object sender, EventArgs e)
         {
+            SetState("Connect");
             
-            var fileContent = string.Empty;
-            var filePath = string.Empty;
-            // Method of opening the database file needed for the program to function.
-            using (OpenFileDialog openFileDialog = new OpenFileDialog())
-            {
-                //Sets the inital Directory to automatically open to the database folder.
-                string path = System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase;
-                path = System.IO.Path.GetDirectoryName(path);
-                path = path + @"\Databases";
-                openFileDialog.InitialDirectory = path;
-                openFileDialog.Filter = "mdf files (*.mdf)|*.mdf";
-                openFileDialog.FilterIndex = 2;
-
-                if (openFileDialog.ShowDialog() == DialogResult.OK)
-                {
-                    filePath = openFileDialog.FileName;
-                    var fileStream = openFileDialog.OpenFile();
-                    using (StreamReader reader = new StreamReader(fileStream))
-                    {
-                        fileContent = reader.ReadToEnd();
-                    }
-                    try
-                    {
-                        hlpPublishers.HelpNamespace = Application.StartupPath + "\\Publishers.chm";
-
-                        booksConnection = new SqlConnection("Data Source=(localdb)\\MSSQLLocalDB;" +
-                            "AttachDbFilename=" + filePath + ";" +
-                        "Integrated Security=True;" +
-                        "Connect Timeout=30;" +
-                        "User Instance=False");
-                        booksConnection.Open();
-
-                        titlesCommand = new SqlCommand(
-                            "SELECT * " +
-                            "FROM Titles " +
-                            "ORDER BY Title", booksConnection);
-
-                        titlesAdapter = new SqlDataAdapter();
-                        titlesAdapter.SelectCommand = titlesCommand;
-                        titlesTable = new DataTable();
-                        titlesAdapter.Fill(titlesTable);
-
-                        txtTitle.DataBindings.Add("Text", titlesTable, "Title");
-                        txtYear.DataBindings.Add("Text", titlesTable, "Year_Published");
-                        txtISBN.DataBindings.Add("Text", titlesTable, "ISBN");
-                        txtDescription.DataBindings.Add("Text", titlesTable, "Description");
-                        txtNotes.DataBindings.Add("Text", titlesTable, "Notes");
-                        txtSubject.DataBindings.Add("Text", titlesTable, "Subject");
-                        txtComments.DataBindings.Add("Text", titlesTable, "Comments");
-
-                        titlesManager = (CurrencyManager)
-                            this.BindingContext[titlesTable];
-
-                        publishersCommand = new SqlCommand("SELECT *" +
-                            "FROM Publishers " +
-                            "ORDER BY Name",
-                            booksConnection);
-                        publishersAdapter = new SqlDataAdapter();
-                        publishersAdapter.SelectCommand = publishersCommand;
-                        publisherTable = new DataTable();
-                        publishersAdapter.Fill(publisherTable);
-                        cboPublisher.DataSource = publisherTable;
-                        cboPublisher.DisplayMember = "Name";
-                        cboPublisher.ValueMember = "PubID";
-                        cboPublisher.DataBindings.Add("SelectedValue", titlesTable, "PubID");
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show(ex.Message,
-                            "Error establishing Publishers table.",
-                            MessageBoxButtons.OK,
-                            MessageBoxIcon.Error);
-                        return;
-                    }
-                    
-                    
-                    this.Show();
-                    SetState("View");
-                    SetText();
-                }
-            }
         }
 
         private void frmAuthors_FormClosing(object sender, FormClosingEventArgs e)
@@ -159,7 +79,7 @@ namespace Chapter5_2_AuthorsTableInputForm
                 titlesTable.Dispose();
                 publishersCommand.Dispose();
                 publishersAdapter.Dispose();
-                publisherTable.Dispose();
+                publishersTable.Dispose();
             }
         }
 
@@ -248,6 +168,35 @@ namespace Chapter5_2_AuthorsTableInputForm
             myState = appState;
             switch (appState)
             {
+                case "Connect":
+                    txtTitle.ReadOnly = true;
+                    txtYear.ReadOnly = true;
+                    txtISBN.ReadOnly = true;
+                    txtTitle.ReadOnly = true;
+                    txtDescription.ReadOnly = true;
+                    txtNotes.ReadOnly = true;
+                    txtSubject.ReadOnly = true;
+                    txtComments.ReadOnly = true;
+                    btnFirst.Enabled = false;
+                    btnPrevious.Enabled = false;
+                    btnNext.Enabled = false;
+                    btnLast.Enabled = false;
+                    btnAddNew.Enabled = false;
+                    btnSave.Enabled = false;
+                    btnCancel.Enabled = false;
+                    btnEdit.Enabled = false;
+                    btnDelete.Enabled = false;
+                    btnDone.Enabled = false;
+                    grpFindTitle.Enabled = false;
+                    cboPublisher.Enabled = false;
+                    btnPublishers.Enabled = false;
+                    btnDisconnect.Enabled = false;
+                    btnConnect.Enabled = true;
+                    btnConnect.Focus();
+                    break;
+                // Note to Self, make connect state
+                case "Disconnect":
+                    // Note to self, make disconnect state
                 case "View":
                     txtTitle.ReadOnly = true; 
                     txtYear.ReadOnly = true; 
@@ -270,6 +219,8 @@ namespace Chapter5_2_AuthorsTableInputForm
                     btnDone.Enabled = true;
                     grpFindTitle.Enabled = true;
                     cboPublisher.Enabled = false;
+                    btnConnect.Enabled = false;
+                    btnDisconnect.Enabled = true;
                     txtTitle.Focus();
                     break;
                 //Add or Edit State
@@ -304,6 +255,8 @@ namespace Chapter5_2_AuthorsTableInputForm
                     btnDone.Enabled = false;
                     grpFindTitle.Enabled = false;
                     cboPublisher.Enabled = true;
+                    btnConnect.Enabled = false;
+                    btnDisconnect.Enabled = false;
                     txtTitle.Focus();
                     break;
             }
@@ -414,6 +367,159 @@ namespace Chapter5_2_AuthorsTableInputForm
             this.Text = "Titles - Record " + (titlesManager.Position
                 + 1).ToString() + " of " + titlesManager.Count.ToString()
                 + " Records";
+        }
+
+        private void btnPublishers_Click(object sender, EventArgs e)
+        {
+            frmPublishers pubForm = new frmPublishers();
+            string pubSave = cboPublisher.Text;
+            pubForm.ShowDialog();
+            pubForm.Dispose(); 
+            // need to regenerate publishers data 
+            booksConnection.Close();
+            var fileContent = string.Empty;
+            var filePath = string.Empty;
+            // Method of opening the database file needed for the program to function.
+            using (OpenFileDialog openFileDialog = new OpenFileDialog())
+            {
+                //Sets the inital Directory to automatically open to the database folder.
+                string path = System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase;
+                path = System.IO.Path.GetDirectoryName(path);
+                path = path + @"\Databases";
+                openFileDialog.InitialDirectory = path;
+                openFileDialog.Filter = "mdf files (*.mdf)|*.mdf";
+                openFileDialog.FilterIndex = 2;
+
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    filePath = openFileDialog.FileName;
+                    var fileStream = openFileDialog.OpenFile();
+                    using (StreamReader reader = new StreamReader(fileStream))
+                    {
+                        fileContent = reader.ReadToEnd();
+                    }
+                    booksConnection = new SqlConnection("Data Source=(localdb)\\MSSQLLocalDB;" +
+                        "AttachDbFilename=" + filePath + ";" +
+                        "Integrated Security=True;" +
+                        "Connect Timeout=30;" +
+                        "User Instance=False");
+                    booksConnection.Open();
+                    publishersAdapter.SelectCommand = publishersCommand;
+                    publishersTable = new DataTable();
+                    publishersAdapter.Fill(publishersTable);
+                    cboPublisher.DataSource = publishersTable;
+                    cboPublisher.Text = pubSave;
+                }
+                else
+                {
+                    string Message = "Please select a valid file to open.",
+                        Title = "Error!";
+
+                    MessageBox.Show(Message,
+                        Title,
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Exclamation);
+                }
+
+            }
+        }
+
+        private void btnConnect_Click(object sender, EventArgs e)
+        {
+            var fileContent = string.Empty;
+            var filePath = string.Empty;
+            // Method of opening the database file needed for the program to function.
+            using (OpenFileDialog openFileDialog = new OpenFileDialog())
+            {
+                //Sets the inital Directory to automatically open to the database folder.
+                string path = System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase;
+                path = System.IO.Path.GetDirectoryName(path);
+                path = path + @"\Databases";
+                openFileDialog.InitialDirectory = path;
+                openFileDialog.Filter = "mdf files (*.mdf)|*.mdf";
+                openFileDialog.FilterIndex = 2;
+
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    filePath = openFileDialog.FileName;
+                    var fileStream = openFileDialog.OpenFile();
+                    using (StreamReader reader = new StreamReader(fileStream))
+                    {
+                        fileContent = reader.ReadToEnd();
+                    }
+                    try
+                    {
+                        hlpPublishers.HelpNamespace = Application.StartupPath + "\\Publishers.chm";
+
+                        booksConnection = new SqlConnection("Data Source=(localdb)\\MSSQLLocalDB;" +
+                            "AttachDbFilename=" + filePath + ";" +
+                        "Integrated Security=True;" +
+                        "Connect Timeout=30;" +
+                        "User Instance=False");
+                        booksConnection.Open();
+
+                        titlesCommand = new SqlCommand(
+                            "SELECT * " +
+                            "FROM Titles " +
+                            "ORDER BY Title", booksConnection);
+
+                        titlesAdapter = new SqlDataAdapter();
+                        titlesAdapter.SelectCommand = titlesCommand;
+                        titlesTable = new DataTable();
+                        titlesAdapter.Fill(titlesTable);
+
+                        txtTitle.DataBindings.Add("Text", titlesTable, "Title");
+                        txtYear.DataBindings.Add("Text", titlesTable, "Year_Published");
+                        txtISBN.DataBindings.Add("Text", titlesTable, "ISBN");
+                        txtDescription.DataBindings.Add("Text", titlesTable, "Description");
+                        txtNotes.DataBindings.Add("Text", titlesTable, "Notes");
+                        txtSubject.DataBindings.Add("Text", titlesTable, "Subject");
+                        txtComments.DataBindings.Add("Text", titlesTable, "Comments");
+
+                        titlesManager = (CurrencyManager)
+                            this.BindingContext[titlesTable];
+
+                        publishersCommand = new SqlCommand("SELECT *" +
+                            "FROM Publishers " +
+                            "ORDER BY Name",
+                            booksConnection);
+                        publishersAdapter = new SqlDataAdapter();
+                        publishersAdapter.SelectCommand = publishersCommand;
+                        publishersTable = new DataTable();
+                        publishersAdapter.Fill(publishersTable);
+                        cboPublisher.DataSource = publishersTable;
+                        cboPublisher.DisplayMember = "Name";
+                        cboPublisher.ValueMember = "PubID";
+                        cboPublisher.DataBindings.Add("SelectedValue", titlesTable, "PubID");
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message,
+                            "Error establishing Publishers table.",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Error);
+                        return;
+                    }
+
+
+                    this.Show();
+                    SetState("View");
+                    SetText();
+                }
+            }
+        }
+
+        private void btnDisconnect_Click(object sender, EventArgs e)
+        {
+            booksConnection.Close();
+
+            booksConnection.Dispose();
+            titlesCommand.Dispose();
+            titlesAdapter.Dispose();
+            titlesTable.Dispose();
+            publishersCommand.Dispose();
+            publishersAdapter.Dispose();
+            publishersTable.Dispose();
         }
     }
 }

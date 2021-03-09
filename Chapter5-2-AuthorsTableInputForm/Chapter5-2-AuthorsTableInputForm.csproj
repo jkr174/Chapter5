@@ -46,6 +46,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="PublisherForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PublisherForm.designer.cs">
+      <DependentUpon>PublisherForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="TitleForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -54,6 +60,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="PublisherForm.resx">
+      <DependentUpon>PublisherForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="TitleForm.resx">
       <DependentUpon>TitleForm.cs</DependentUpon>
     </EmbeddedResource>
