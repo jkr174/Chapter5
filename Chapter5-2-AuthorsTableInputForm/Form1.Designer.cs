@@ -59,6 +59,8 @@
             this.txtPubFAX = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
             this.txtPubComments = new System.Windows.Forms.TextBox();
+            this.btnFirst = new System.Windows.Forms.Button();
+            this.btnLast = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -357,11 +359,35 @@
             this.txtPubComments.Size = new System.Drawing.Size(289, 20);
             this.txtPubComments.TabIndex = 9;
             // 
+            // btnFirst
+            // 
+            this.btnFirst.Location = new System.Drawing.Point(50, 362);
+            this.btnFirst.Name = "btnFirst";
+            this.btnFirst.Size = new System.Drawing.Size(75, 23);
+            this.btnFirst.TabIndex = 31;
+            this.btnFirst.TabStop = false;
+            this.btnFirst.Text = "|< First";
+            this.btnFirst.UseVisualStyleBackColor = true;
+            this.btnFirst.Click += new System.EventHandler(this.btnFirst_Click);
+            // 
+            // btnLast
+            // 
+            this.btnLast.Location = new System.Drawing.Point(310, 362);
+            this.btnLast.Name = "btnLast";
+            this.btnLast.Size = new System.Drawing.Size(75, 23);
+            this.btnLast.TabIndex = 32;
+            this.btnLast.TabStop = false;
+            this.btnLast.Text = "Last >|";
+            this.btnLast.UseVisualStyleBackColor = true;
+            this.btnLast.Click += new System.EventHandler(this.btnLast_Click);
+            // 
             // frmAuthors
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(432, 484);
+            this.Controls.Add(this.btnLast);
+            this.Controls.Add(this.btnFirst);
             this.Controls.Add(this.txtPubComments);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.txtPubFAX);
@@ -440,6 +466,8 @@
         private System.Windows.Forms.TextBox txtPubFAX;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.TextBox txtPubComments;
+        private System.Windows.Forms.Button btnFirst;
+        private System.Windows.Forms.Button btnLast;
     }
 }
 

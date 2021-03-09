@@ -248,6 +248,8 @@ namespace Chapter5_2_AuthorsTableInputForm
                     btnEdit.Enabled = true;
                     btnDelete.Enabled = true;
                     btnDone.Enabled = true;
+                    btnFirst.Enabled = true;
+                    btnLast.Enabled = true;
                     txtPubName.Focus();
                     break;
                 //Add or Edit State
@@ -271,6 +273,8 @@ namespace Chapter5_2_AuthorsTableInputForm
                     btnEdit.Enabled = false;
                     btnDelete.Enabled = false;
                     btnDone.Enabled = false;
+                    btnFirst.Enabled = false;
+                    btnLast.Enabled = false;
                     txtPubName.Focus();
                     break;
             }
@@ -356,6 +360,16 @@ namespace Chapter5_2_AuthorsTableInputForm
         private void btnHelp_Click(object sender, EventArgs e)
         {
             Help.ShowHelp(this, hlpPublishers.HelpNamespace);
+        }
+
+        private void btnFirst_Click(object sender, EventArgs e)
+        {
+            publishersManager.Position = 0;
+        }
+
+        private void btnLast_Click(object sender, EventArgs e)
+        {
+            publishersManager.Position = publishersManager.Count - 1;
         }
     }
 }
