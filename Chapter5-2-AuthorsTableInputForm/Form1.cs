@@ -24,6 +24,8 @@ namespace Chapter5_2_AuthorsTableInputForm
         SqlDataAdapter publishersAdapter;
         DataTable publishersTable;
         CurrencyManager publishersManager;
+        string myState;
+        int myBookmark;
         public frmAuthors()
         {
             InitializeComponent();
@@ -31,7 +33,7 @@ namespace Chapter5_2_AuthorsTableInputForm
 
         private void btnDone_Click(object sender, EventArgs e)
         {
-
+            this.Close();
         }
 
         private void frmAuthors_Load(object sender, EventArgs e)
@@ -110,12 +112,37 @@ namespace Chapter5_2_AuthorsTableInputForm
 
         private void frmAuthors_FormClosing(object sender, FormClosingEventArgs e)
         {
-            booksConnection.Close();
+            if (myState.Equals("Edit") || myState.Equals("Add"))
+            {
+                MessageBox.Show("You must finish the current edit before stopping the application,",
+                    "",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
+                e.Cancel = true;
+            }
+            else
+            {
+                try
+                {
+                    SqlCommandBuilder publishersAdapterCommands = new SqlCommandBuilder(publishersAdapter);
+                    publishersAdapter.Update(publishersTable);
 
-            booksConnection.Dispose();
-            publishersCommand.Dispose();
-            publishersAdapter.Dispose();
-            publishersTable.Dispose();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error saving database to file: \r\n"
+                        + ex.Message,
+                        "Save Error",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error);
+                }
+                booksConnection.Close();
+
+                booksConnection.Dispose();
+                publishersCommand.Dispose();
+                publishersAdapter.Dispose();
+                publishersTable.Dispose();
+            }
         }
 
         private void btnPrevious_Click(object sender, EventArgs e)
@@ -142,8 +169,14 @@ namespace Chapter5_2_AuthorsTableInputForm
             {
                 return;
             }
+            string savedName = txtPubName.Text;
+            int savedRow;
             try
             {
+                publishersManager.EndCurrentEdit();
+                publishersTable.DefaultView.Sort = "Name";
+                savedRow = publishersTable.DefaultView.Find(savedName);
+                publishersManager.Position = savedRow;
                 string Message = "Record saved.",
                 Title = "Save";
 
@@ -180,6 +213,7 @@ namespace Chapter5_2_AuthorsTableInputForm
             }
             try
             {
+                publishersManager.RemoveAt(publishersManager.Position);
             }
             catch (Exception ex)
             {
@@ -191,6 +225,7 @@ namespace Chapter5_2_AuthorsTableInputForm
         }
         private void SetState(string appState)
         {
+            myState = appState;
             switch (appState)
             {
                 case "View":
@@ -245,6 +280,8 @@ namespace Chapter5_2_AuthorsTableInputForm
         {
             try
             {
+                myBookmark = publishersManager.Position;
+                publishersManager.AddNew();
                 SetState("Add");
             }
             catch (Exception ex)
@@ -263,6 +300,9 @@ namespace Chapter5_2_AuthorsTableInputForm
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
+            publishersManager.CancelCurrentEdit();
+            if (myState.Equals("Add"))
+                publishersManager.Position = myBookmark;
             SetState("View");
         }
 
