@@ -4,6 +4,7 @@
  */
 
 using System;
+using System.IO;
 using System.Data.SqlClient;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -23,6 +24,8 @@ namespace Chapter5_2_AuthorsTableInputForm
         SqlDataAdapter authorsAdapter;
         DataTable authorsTable;
         CurrencyManager authorsManager;
+        string myState;
+        int myBookmark;
         public frmAuthors()
         {
             InitializeComponent();
@@ -30,54 +33,102 @@ namespace Chapter5_2_AuthorsTableInputForm
 
         private void btnDone_Click(object sender, EventArgs e)
         {
-
+            this.Close();
         }
 
         private void frmAuthors_Load(object sender, EventArgs e)
         {
-            try
+            var fileContent = string.Empty;
+            var filePath = string.Empty;
+            // Method of opening the database file needed for the program to function.
+            using (OpenFileDialog openFileDialog = new OpenFileDialog())
             {
-                booksConnection = new SqlConnection("Data Source=.\\SQLEXPRESS;" +
-                    "AttachDbFilename=\\..\\..\\Databases\\SQLBooksDB.mdf;" +
-                    "Integrated Security=True;" +
-                    "Connect Timeout=30;" +
-                    "User Instance=False");
-                booksConnection.Open();
+                //Sets the inital Directory to automatically open to the database folder.
+                string path = System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase;
+                path = System.IO.Path.GetDirectoryName(path);
+                path = path + @"\Databases";
+                openFileDialog.InitialDirectory = path;
+                openFileDialog.Filter = "mdf files (*.mdf)|*.mdf";
+                openFileDialog.FilterIndex = 2;
 
-                authorsCommand = new SqlCommand("Select * from Authors ORDER BY Author", booksConnection);
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    filePath = openFileDialog.FileName;
+                    var fileStream = openFileDialog.OpenFile();
+                    using (StreamReader reader = new StreamReader(fileStream))
+                    {
+                        fileContent = reader.ReadToEnd();
+                    }
+                    try
+                    {
+                        booksConnection = new SqlConnection("Data Source = (localdb)\\MSSQLLocalDB; " +
+                        "AttachDbFilename=" + filePath + ";" +
+                        "Integrated Security=True;" +
+                        "Connect Timeout=30;" +
+                        "User Instance=False");
+                        booksConnection.Open();
 
-                authorsAdapter = new SqlDataAdapter();
-                authorsAdapter.SelectCommand = authorsCommand;
-                authorsTable = new DataTable();
-                authorsAdapter.Fill(authorsTable);
+                        authorsCommand = new SqlCommand("Select * from Authors ORDER BY Author", booksConnection);
 
-                txtAuthorID.DataBindings.Add("Text", authorsTable, "Au_ID");
-                txtAuthorName.DataBindings.Add("Text", authorsTable, "Author");
-                txtYearBorn.DataBindings.Add("Text", authorsTable, "Year_Born");
+                        authorsAdapter = new SqlDataAdapter();
+                        authorsAdapter.SelectCommand = authorsCommand;
+                        authorsTable = new DataTable();
+                        authorsAdapter.Fill(authorsTable);
 
-                authorsManager = (CurrencyManager)
-                    this.BindingContext[authorsTable];
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message,
+                        txtAuthorID.DataBindings.Add("Text", authorsTable, "Au_ID");
+                        txtAuthorName.DataBindings.Add("Text", authorsTable, "Author");
+                        txtYearBorn.DataBindings.Add("Text", authorsTable, "Year_Born");
+
+                        authorsManager = (CurrencyManager)
+                            this.BindingContext[authorsTable];
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message,
                     "Error establishing Authors table.",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
-                return;
+                        return;
+                    }
+                    this.Show();
+                    SetState("View");
+
+                }
             }
-            this.Show();
-            SetState("View");
         }
 
         private void frmAuthors_FormClosing(object sender, FormClosingEventArgs e)
         {
-            booksConnection.Close();
+            if (myState.Equals("Edit") || myState.Equals("Add"))
+            {
+                MessageBox.Show("You must finish the current edit before stopping the application.",
+                    "",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
+                e.Cancel = true;
+            }
+            else
+            {
+                try
+                {
+                    SqlCommandBuilder authorsAdapterCommands = new SqlCommandBuilder(authorsAdapter);
+                    authorsAdapter.Update(authorsTable);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error saving database to file: \r\n" +
+                        ex.Message,
+                        "Save Error",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error);
+                }
+                booksConnection.Close();
 
-            booksConnection.Dispose();
-            authorsCommand.Dispose();
-            authorsAdapter.Dispose();
-            authorsTable.Dispose();
+                booksConnection.Dispose();
+                authorsCommand.Dispose();
+                authorsAdapter.Dispose();
+                authorsTable.Dispose();
+            }
         }
 
         private void btnPrevious_Click(object sender, EventArgs e)
@@ -104,8 +155,14 @@ namespace Chapter5_2_AuthorsTableInputForm
             {
                 return;
             }
+            string savedName = txtAuthorName.Text;
+            int savedRow;
             try
             {
+                authorsManager.EndCurrentEdit();
+                authorsTable.DefaultView.Sort = "Author";
+                savedRow = authorsTable.DefaultView.Find(savedName);
+                authorsManager.Position = savedRow;
                 string Message = "Record saved.",
                 Title = "Save";
 
@@ -142,6 +199,7 @@ namespace Chapter5_2_AuthorsTableInputForm
             }
             try
             {
+                authorsManager.RemoveAt(authorsManager.Position);
             }
             catch (Exception ex)
             {
@@ -153,6 +211,7 @@ namespace Chapter5_2_AuthorsTableInputForm
         }
         private void SetState(string appState)
         {
+            myState = appState;
             switch (appState)
             {
                 case "View":
@@ -197,6 +256,8 @@ namespace Chapter5_2_AuthorsTableInputForm
         {
             try
             {
+                myBookmark = authorsManager.Position;
+                authorsManager.AddNew();
                 SetState("Add");
             }
             catch (Exception ex)
@@ -215,6 +276,11 @@ namespace Chapter5_2_AuthorsTableInputForm
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
+            authorsManager.CancelCurrentEdit();
+            if(myState.Equals("Add"))
+            {
+                authorsManager.Position = myBookmark;
+            }
             SetState("View");
         }
 
