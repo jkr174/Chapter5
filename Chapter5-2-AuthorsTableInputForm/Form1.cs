@@ -38,10 +38,10 @@ namespace Chapter5_2_AuthorsTableInputForm
             try
             {
                 booksConnection = new SqlConnection("Data Source=.\\SQLEXPRESS;" +
-                    "AttachDbFilename=c:\\VCSDB\\Working\\SQLBooksDB.mdf;" +
+                    "AttachDbFilename=\\..\\..\\Databases\\SQLBooksDB.mdf;" +
                     "Integrated Security=True;" +
                     "Connect Timeout=30;" +
-                    "User Instance=True");
+                    "User Instance=False");
                 booksConnection.Open();
 
                 authorsCommand = new SqlCommand("Select * from Authors ORDER BY Author", booksConnection);
@@ -168,6 +168,8 @@ namespace Chapter5_2_AuthorsTableInputForm
                     btnEdit.Enabled = true;
                     btnDelete.Enabled = true;
                     btnDone.Enabled = true;
+                    btnFirst.Enabled = true;
+                    btnLast.Enabled = true;
                     txtAuthorName.Focus();
                     break;
                 //Add or Edit State
@@ -184,6 +186,8 @@ namespace Chapter5_2_AuthorsTableInputForm
                     btnEdit.Enabled = false;
                     btnDelete.Enabled = false;
                     btnDone.Enabled = false;
+                    btnFirst.Enabled = false;
+                    btnLast.Enabled = false;
                     txtAuthorName.Focus();
                     break;
             }
@@ -270,6 +274,16 @@ namespace Chapter5_2_AuthorsTableInputForm
             {
                 txtYearBorn.Focus();
             }
+        }
+
+        private void btnFirst_Click(object sender, EventArgs e)
+        {
+            authorsManager.Position = 0;
+        }
+
+        private void btnLast_Click(object sender, EventArgs e)
+        {
+            authorsManager.Position = authorsManager.Count - 1;
         }
     }
 }
