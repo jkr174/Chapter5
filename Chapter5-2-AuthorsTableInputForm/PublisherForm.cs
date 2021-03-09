@@ -38,6 +38,7 @@ namespace Chapter5_2_AuthorsTableInputForm
 
         private void frmAuthors_Load(object sender, EventArgs e)
         {
+            
             try
             {
                 hlpPublishers.HelpNamespace = Application.StartupPath + "\\Publishers.chm";
@@ -85,6 +86,7 @@ namespace Chapter5_2_AuthorsTableInputForm
 
             this.Show();
             SetState("View");
+            SetText();
         }
 
 
@@ -130,6 +132,7 @@ namespace Chapter5_2_AuthorsTableInputForm
                 Console.Beep();
             }
             publishersManager.Position--;
+            SetText();
         }
 
         private void btnNext_Click(object sender, EventArgs e)
@@ -139,10 +142,12 @@ namespace Chapter5_2_AuthorsTableInputForm
                 Console.Beep();
             }
             publishersManager.Position++;
+            SetText();
         }
 
         private void btnSave_Click(object sender, EventArgs e)
         {
+            
             if (!ValidateData())
             {
                 return;
@@ -171,10 +176,12 @@ namespace Chapter5_2_AuthorsTableInputForm
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
             }
+            SetText();
         }
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
+            
             string Message = "Are you sure you want to delete this record?",
                 Title = "Delete";
 
@@ -200,6 +207,7 @@ namespace Chapter5_2_AuthorsTableInputForm
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
             }
+            SetText();
         }
         private void SetState(string appState)
         {
@@ -256,6 +264,7 @@ namespace Chapter5_2_AuthorsTableInputForm
 
         private void btnAddNew_Click(object sender, EventArgs e)
         {
+            
             try
             {
                 myBookmark = publishersManager.Position;
@@ -269,6 +278,7 @@ namespace Chapter5_2_AuthorsTableInputForm
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
             }
+            SetText();
         }
 
         private void btnEdit_Click(object sender, EventArgs e)
@@ -278,10 +288,12 @@ namespace Chapter5_2_AuthorsTableInputForm
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
+            
             publishersManager.CancelCurrentEdit();
             if (myState.Equals("Add"))
                 publishersManager.Position = myBookmark;
             SetState("View");
+            SetText();
         }
 
         private void txtYearBorn_KeyPress(object sender, KeyPressEventArgs e)
@@ -334,6 +346,46 @@ namespace Chapter5_2_AuthorsTableInputForm
         private void btnHelp_Click(object sender, EventArgs e)
         {
             Help.ShowHelp(this, hlpPublishers.HelpNamespace);
+        }
+
+        private void btnFirst_Click(object sender, EventArgs e)
+        {
+            publishersManager.Position = 0;
+            SetText();
+        }
+
+        private void btnLast_Click(object sender, EventArgs e)
+        {
+            publishersManager.Position = publishersManager.Count - 1;
+            SetText();
+        }
+
+        private void btnFind_Click(object sender, EventArgs e)
+        {
+            if (txtFind.Text.Equals(""))
+            {
+                return;
+            }
+            int savedRow = publishersManager.Position;
+            DataRow[] foundRows;
+            publishersTable.DefaultView.Sort = "Name";
+            foundRows = publishersTable.Select("Name LIKE '" +
+            txtFind.Text + "*'");
+            if (foundRows.Length == 0)
+            {
+                publishersManager.Position = savedRow;
+            }
+            else
+            {
+                publishersManager.Position =
+                publishersTable.DefaultView.Find(foundRows[0]["Name"]);
+            }
+        }
+        private void SetText()
+        {
+            this.Text = "Publishers - Record " +
+            (publishersManager.Position + 1).ToString() + " of " +
+            publishersManager.Count.ToString() + " Records";
         }
     }
 }

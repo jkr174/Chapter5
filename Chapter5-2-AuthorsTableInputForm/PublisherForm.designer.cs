@@ -59,7 +59,14 @@
             this.txtPubFAX = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
             this.txtPubComments = new System.Windows.Forms.TextBox();
+            this.btnFirst = new System.Windows.Forms.Button();
+            this.btnLast = new System.Windows.Forms.Button();
+            this.grpFindPublisher = new System.Windows.Forms.GroupBox();
+            this.btnFind = new System.Windows.Forms.Button();
+            this.txtFind = new System.Windows.Forms.TextBox();
+            this.label11 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.grpFindPublisher.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
@@ -96,35 +103,35 @@
             this.txtPubName.Location = new System.Drawing.Point(112, 113);
             this.txtPubName.Name = "txtPubName";
             this.txtPubName.ReadOnly = true;
-            this.txtPubName.Size = new System.Drawing.Size(289, 20);
+            this.txtPubName.Size = new System.Drawing.Size(336, 20);
             this.txtPubName.TabIndex = 1;
             this.txtPubName.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtAuthorName_KeyPress);
             // 
             // btnPrevious
             // 
-            this.btnPrevious.Location = new System.Drawing.Point(131, 362);
+            this.btnPrevious.Location = new System.Drawing.Point(211, 362);
             this.btnPrevious.Name = "btnPrevious";
             this.btnPrevious.Size = new System.Drawing.Size(75, 23);
             this.btnPrevious.TabIndex = 6;
             this.btnPrevious.TabStop = false;
-            this.btnPrevious.Text = "<= Pervious";
+            this.btnPrevious.Text = "< Pervious";
             this.btnPrevious.UseVisualStyleBackColor = true;
             this.btnPrevious.Click += new System.EventHandler(this.btnPrevious_Click);
             // 
             // btnNext
             // 
-            this.btnNext.Location = new System.Drawing.Point(229, 362);
+            this.btnNext.Location = new System.Drawing.Point(292, 362);
             this.btnNext.Name = "btnNext";
             this.btnNext.Size = new System.Drawing.Size(75, 23);
             this.btnNext.TabIndex = 7;
             this.btnNext.TabStop = false;
-            this.btnNext.Text = "Next =>";
+            this.btnNext.Text = "Next >";
             this.btnNext.UseVisualStyleBackColor = true;
             this.btnNext.Click += new System.EventHandler(this.btnNext_Click);
             // 
             // btnEdit
             // 
-            this.btnEdit.Location = new System.Drawing.Point(96, 391);
+            this.btnEdit.Location = new System.Drawing.Point(130, 391);
             this.btnEdit.Name = "btnEdit";
             this.btnEdit.Size = new System.Drawing.Size(75, 23);
             this.btnEdit.TabIndex = 8;
@@ -135,7 +142,7 @@
             // 
             // btnSave
             // 
-            this.btnSave.Location = new System.Drawing.Point(177, 391);
+            this.btnSave.Location = new System.Drawing.Point(250, 391);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(75, 23);
             this.btnSave.TabIndex = 9;
@@ -146,7 +153,7 @@
             // 
             // btnCancel
             // 
-            this.btnCancel.Location = new System.Drawing.Point(258, 391);
+            this.btnCancel.Location = new System.Drawing.Point(373, 391);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
             this.btnCancel.TabIndex = 10;
@@ -157,7 +164,7 @@
             // 
             // btnAddNew
             // 
-            this.btnAddNew.Location = new System.Drawing.Point(96, 420);
+            this.btnAddNew.Location = new System.Drawing.Point(130, 420);
             this.btnAddNew.Name = "btnAddNew";
             this.btnAddNew.Size = new System.Drawing.Size(75, 23);
             this.btnAddNew.TabIndex = 11;
@@ -168,7 +175,7 @@
             // 
             // btnDelete
             // 
-            this.btnDelete.Location = new System.Drawing.Point(177, 420);
+            this.btnDelete.Location = new System.Drawing.Point(250, 420);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(75, 23);
             this.btnDelete.TabIndex = 12;
@@ -179,7 +186,7 @@
             // 
             // btnDone
             // 
-            this.btnDone.Location = new System.Drawing.Point(258, 420);
+            this.btnDone.Location = new System.Drawing.Point(373, 420);
             this.btnDone.Name = "btnDone";
             this.btnDone.Size = new System.Drawing.Size(75, 23);
             this.btnDone.TabIndex = 13;
@@ -200,7 +207,7 @@
             // 
             // btnHelp
             // 
-            this.btnHelp.Location = new System.Drawing.Point(258, 449);
+            this.btnHelp.Location = new System.Drawing.Point(373, 449);
             this.btnHelp.Name = "btnHelp";
             this.btnHelp.Size = new System.Drawing.Size(75, 23);
             this.btnHelp.TabIndex = 15;
@@ -224,7 +231,7 @@
             this.txtCompanyName.Location = new System.Drawing.Point(112, 139);
             this.txtCompanyName.Name = "txtCompanyName";
             this.txtCompanyName.ReadOnly = true;
-            this.txtCompanyName.Size = new System.Drawing.Size(289, 20);
+            this.txtCompanyName.Size = new System.Drawing.Size(336, 20);
             this.txtCompanyName.TabIndex = 17;
             // 
             // label4
@@ -242,7 +249,7 @@
             this.txtPubAddress.Location = new System.Drawing.Point(112, 165);
             this.txtPubAddress.Name = "txtPubAddress";
             this.txtPubAddress.ReadOnly = true;
-            this.txtPubAddress.Size = new System.Drawing.Size(289, 20);
+            this.txtPubAddress.Size = new System.Drawing.Size(336, 20);
             this.txtPubAddress.TabIndex = 3;
             // 
             // label5
@@ -260,7 +267,7 @@
             this.txtPubCity.Location = new System.Drawing.Point(112, 191);
             this.txtPubCity.Name = "txtPubCity";
             this.txtPubCity.ReadOnly = true;
-            this.txtPubCity.Size = new System.Drawing.Size(289, 20);
+            this.txtPubCity.Size = new System.Drawing.Size(336, 20);
             this.txtPubCity.TabIndex = 4;
             // 
             // label6
@@ -354,14 +361,78 @@
             this.txtPubComments.Location = new System.Drawing.Point(112, 321);
             this.txtPubComments.Name = "txtPubComments";
             this.txtPubComments.ReadOnly = true;
-            this.txtPubComments.Size = new System.Drawing.Size(289, 20);
+            this.txtPubComments.Size = new System.Drawing.Size(336, 20);
             this.txtPubComments.TabIndex = 9;
+            // 
+            // btnFirst
+            // 
+            this.btnFirst.Location = new System.Drawing.Point(130, 362);
+            this.btnFirst.Name = "btnFirst";
+            this.btnFirst.Size = new System.Drawing.Size(75, 23);
+            this.btnFirst.TabIndex = 31;
+            this.btnFirst.Text = "|< First";
+            this.btnFirst.UseVisualStyleBackColor = true;
+            this.btnFirst.Click += new System.EventHandler(this.btnFirst_Click);
+            // 
+            // btnLast
+            // 
+            this.btnLast.Location = new System.Drawing.Point(373, 362);
+            this.btnLast.Name = "btnLast";
+            this.btnLast.Size = new System.Drawing.Size(75, 23);
+            this.btnLast.TabIndex = 32;
+            this.btnLast.Text = "Last >|";
+            this.btnLast.UseVisualStyleBackColor = true;
+            this.btnLast.Click += new System.EventHandler(this.btnLast_Click);
+            // 
+            // grpFindPublisher
+            // 
+            this.grpFindPublisher.Controls.Add(this.btnFind);
+            this.grpFindPublisher.Controls.Add(this.txtFind);
+            this.grpFindPublisher.Controls.Add(this.label11);
+            this.grpFindPublisher.Location = new System.Drawing.Point(12, 448);
+            this.grpFindPublisher.Name = "grpFindPublisher";
+            this.grpFindPublisher.Size = new System.Drawing.Size(249, 86);
+            this.grpFindPublisher.TabIndex = 33;
+            this.grpFindPublisher.TabStop = false;
+            this.grpFindPublisher.Text = "Find Publisher";
+            // 
+            // btnFind
+            // 
+            this.btnFind.Location = new System.Drawing.Point(123, 45);
+            this.btnFind.Name = "btnFind";
+            this.btnFind.Size = new System.Drawing.Size(108, 23);
+            this.btnFind.TabIndex = 28;
+            this.btnFind.TabStop = false;
+            this.btnFind.Text = "Find";
+            this.btnFind.UseVisualStyleBackColor = true;
+            this.btnFind.Click += new System.EventHandler(this.btnFind_Click);
+            // 
+            // txtFind
+            // 
+            this.txtFind.BackColor = System.Drawing.Color.White;
+            this.txtFind.Location = new System.Drawing.Point(123, 19);
+            this.txtFind.Name = "txtFind";
+            this.txtFind.Size = new System.Drawing.Size(108, 20);
+            this.txtFind.TabIndex = 28;
+            this.txtFind.TabStop = false;
+            // 
+            // label11
+            // 
+            this.label11.Location = new System.Drawing.Point(6, 22);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(111, 26);
+            this.label11.TabIndex = 0;
+            this.label11.Text = "Type first few letters of Publisher Name";
+            this.label11.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // frmPublishers
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(432, 484);
+            this.ClientSize = new System.Drawing.Size(460, 549);
+            this.Controls.Add(this.grpFindPublisher);
+            this.Controls.Add(this.btnLast);
+            this.Controls.Add(this.btnFirst);
             this.Controls.Add(this.txtPubComments);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.txtPubFAX);
@@ -402,6 +473,8 @@
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmAuthors_FormClosing);
             this.Load += new System.EventHandler(this.frmAuthors_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.grpFindPublisher.ResumeLayout(false);
+            this.grpFindPublisher.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -440,6 +513,12 @@
         private System.Windows.Forms.TextBox txtPubFAX;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.TextBox txtPubComments;
+        private System.Windows.Forms.Button btnFirst;
+        private System.Windows.Forms.Button btnLast;
+        private System.Windows.Forms.GroupBox grpFindPublisher;
+        private System.Windows.Forms.Button btnFind;
+        private System.Windows.Forms.TextBox txtFind;
+        private System.Windows.Forms.Label label11;
     }
 }
 

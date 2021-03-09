@@ -62,8 +62,6 @@
             this.label9 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.btnPublishers = new System.Windows.Forms.Button();
-            this.btnConnect = new System.Windows.Forms.Button();
-            this.btnDisconnect = new System.Windows.Forms.Button();
             this.grpFindTitle.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -140,7 +138,7 @@
             // 
             // btnSave
             // 
-            this.btnSave.Location = new System.Drawing.Point(222, 391);
+            this.btnSave.Location = new System.Drawing.Point(263, 391);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(75, 23);
             this.btnSave.TabIndex = 9;
@@ -151,7 +149,7 @@
             // 
             // btnCancel
             // 
-            this.btnCancel.Location = new System.Drawing.Point(303, 391);
+            this.btnCancel.Location = new System.Drawing.Point(384, 391);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
             this.btnCancel.TabIndex = 10;
@@ -173,7 +171,7 @@
             // 
             // btnDelete
             // 
-            this.btnDelete.Location = new System.Drawing.Point(222, 420);
+            this.btnDelete.Location = new System.Drawing.Point(263, 420);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(75, 23);
             this.btnDelete.TabIndex = 12;
@@ -184,7 +182,7 @@
             // 
             // btnDone
             // 
-            this.btnDone.Location = new System.Drawing.Point(303, 420);
+            this.btnDone.Location = new System.Drawing.Point(384, 420);
             this.btnDone.Name = "btnDone";
             this.btnDone.Size = new System.Drawing.Size(75, 23);
             this.btnDone.TabIndex = 13;
@@ -195,7 +193,7 @@
             // 
             // btnHelp
             // 
-            this.btnHelp.Location = new System.Drawing.Point(222, 449);
+            this.btnHelp.Location = new System.Drawing.Point(384, 449);
             this.btnHelp.Name = "btnHelp";
             this.btnHelp.Size = new System.Drawing.Size(75, 23);
             this.btnHelp.TabIndex = 15;
@@ -389,7 +387,7 @@
             // 
             // btnPublishers
             // 
-            this.btnPublishers.Location = new System.Drawing.Point(141, 449);
+            this.btnPublishers.Location = new System.Drawing.Point(263, 449);
             this.btnPublishers.Name = "btnPublishers";
             this.btnPublishers.Size = new System.Drawing.Size(75, 23);
             this.btnPublishers.TabIndex = 30;
@@ -398,35 +396,11 @@
             this.btnPublishers.UseVisualStyleBackColor = true;
             this.btnPublishers.Click += new System.EventHandler(this.btnPublishers_Click);
             // 
-            // btnConnect
-            // 
-            this.btnConnect.Location = new System.Drawing.Point(384, 391);
-            this.btnConnect.Name = "btnConnect";
-            this.btnConnect.Size = new System.Drawing.Size(75, 23);
-            this.btnConnect.TabIndex = 31;
-            this.btnConnect.TabStop = false;
-            this.btnConnect.Text = "C&onnect";
-            this.btnConnect.UseVisualStyleBackColor = true;
-            this.btnConnect.Click += new System.EventHandler(this.btnConnect_Click);
-            // 
-            // btnDisconnect
-            // 
-            this.btnDisconnect.Location = new System.Drawing.Point(384, 420);
-            this.btnDisconnect.Name = "btnDisconnect";
-            this.btnDisconnect.Size = new System.Drawing.Size(75, 23);
-            this.btnDisconnect.TabIndex = 32;
-            this.btnDisconnect.TabStop = false;
-            this.btnDisconnect.Text = "D&isconnect";
-            this.btnDisconnect.UseVisualStyleBackColor = true;
-            this.btnDisconnect.Click += new System.EventHandler(this.btnDisconnect_Click);
-            // 
             // frmTitles
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(476, 484);
-            this.Controls.Add(this.btnDisconnect);
-            this.Controls.Add(this.btnConnect);
             this.Controls.Add(this.btnPublishers);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.cboPublisher);
@@ -510,8 +484,6 @@
         private System.Windows.Forms.ComboBox cboPublisher;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Button btnPublishers;
-        private System.Windows.Forms.Button btnConnect;
-        private System.Windows.Forms.Button btnDisconnect;
     }
 }
 
