@@ -43,7 +43,7 @@ namespace Chapter5_2_AuthorsTableInputForm
                     "AttachDbFilename=c:\\VCSDB\\Working\\SQLBooksDB.mdf;" +
                     "Integrated Security=True;" +
                     "Connect Timeout=30;" +
-                    "User Instance=True");
+                    "User Instance=False");
                 booksConnection.Open();
 
                 publishersCommand = new SqlCommand(

@@ -7,3 +7,4 @@ C:\Users\jromo021627\Documents\GitHub\Chapter5\Chapter5-2-AuthorsTableInputForm\
 C:\Users\jromo021627\Documents\GitHub\Chapter5\Chapter5-2-AuthorsTableInputForm\obj\Debug\Chapter5-2-AuthorsTableInputForm.csproj.GenerateResource.cache
 C:\Users\jromo021627\Documents\GitHub\Chapter5\Chapter5-2-AuthorsTableInputForm\obj\Debug\Chapter5-2-AuthorsTableInputForm.exe
 C:\Users\jromo021627\Documents\GitHub\Chapter5\Chapter5-2-AuthorsTableInputForm\obj\Debug\Chapter5-2-AuthorsTableInputForm.pdb
+C:\Users\jromo021627\Documents\GitHub\Chapter5\Chapter5-2-AuthorsTableInputForm\obj\Debug\Chapter5-2-AuthorsTableInputForm.csproj.CoreCompileInputs.cache
