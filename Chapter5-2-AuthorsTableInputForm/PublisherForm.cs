@@ -38,77 +38,55 @@ namespace Chapter5_2_AuthorsTableInputForm
 
         private void frmAuthors_Load(object sender, EventArgs e)
         {
-            var fileContent = string.Empty;
-            var filePath = string.Empty;
-            // Method of opening the database file needed for the program to function.
-            using (OpenFileDialog openFileDialog = new OpenFileDialog())
+            try
             {
-                //Sets the inital Directory to automatically open to the database folder.
-                string path = System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase;
-                path = System.IO.Path.GetDirectoryName(path);
-                path = path + @"\Databases";
-                openFileDialog.InitialDirectory = path;
-                openFileDialog.Filter = "mdf files (*.mdf)|*.mdf";
-                openFileDialog.FilterIndex = 2;
+                hlpPublishers.HelpNamespace = Application.StartupPath + "\\Publishers.chm";
 
-                if (openFileDialog.ShowDialog() == DialogResult.OK)
-                {
-                    filePath = openFileDialog.FileName;
-                    var fileStream = openFileDialog.OpenFile();
-                    using (StreamReader reader = new StreamReader(fileStream))
-                    {
-                        fileContent = reader.ReadToEnd();
-                    }
-                    try
-                    {
-                        hlpPublishers.HelpNamespace = Application.StartupPath + "\\Publishers.chm";
+                booksConnection = new SqlConnection("Data Source=(localdb)\\MSSQLLocalDB;" +
+                    "AttachDbFilename=|DataDirectory|\\SQLBooksDB.mdf;" +
+                "Integrated Security=True;" +
+                "Connect Timeout=30;" +
+                "User Instance=False");
+                booksConnection.Open();
 
-                        booksConnection = new SqlConnection("Data Source=(localdb)\\MSSQLLocalDB;" +
-                            "AttachDbFilename=" + filePath + ";" +
-                        "Integrated Security=True;" +
-                        "Connect Timeout=30;" +
-                        "User Instance=False");
-                        booksConnection.Open();
+                publishersCommand = new SqlCommand(
+                    "SELECT * " +
+                    "FROM Publishers " +
+                    "ORDER BY Name", booksConnection);
 
-                        publishersCommand = new SqlCommand(
-                            "SELECT * " +
-                            "FROM Publishers " +
-                            "ORDER BY Name", booksConnection);
+                publishersAdapter = new SqlDataAdapter();
+                publishersAdapter.SelectCommand = publishersCommand;
+                publishersTable = new DataTable();
+                publishersAdapter.Fill(publishersTable);
 
-                        publishersAdapter = new SqlDataAdapter();
-                        publishersAdapter.SelectCommand = publishersCommand;
-                        publishersTable = new DataTable();
-                        publishersAdapter.Fill(publishersTable);
+                txtPubID.DataBindings.Add("Text", publishersTable, "PubID");
+                txtPubName.DataBindings.Add("Text", publishersTable, "Name");
+                txtCompanyName.DataBindings.Add("Text", publishersTable, "Company_Name");
+                txtPubAddress.DataBindings.Add("Text", publishersTable, "Address");
+                txtPubCity.DataBindings.Add("Text", publishersTable, "City");
+                txtPubState.DataBindings.Add("Text", publishersTable, "State");
+                txtPubZip.DataBindings.Add("Text", publishersTable, "Zip");
+                txtPubTelephone.DataBindings.Add("Text", publishersTable, "Telephone");
+                txtPubFAX.DataBindings.Add("Text", publishersTable, "FAX");
+                txtPubComments.DataBindings.Add("Text", publishersTable, "Comments");
 
-                        txtPubID.DataBindings.Add("Text", publishersTable, "PubID");
-                        txtPubName.DataBindings.Add("Text", publishersTable, "Name");
-                        txtCompanyName.DataBindings.Add("Text", publishersTable, "Company_Name");
-                        txtPubAddress.DataBindings.Add("Text", publishersTable, "Address");
-                        txtPubCity.DataBindings.Add("Text", publishersTable, "City");
-                        txtPubState.DataBindings.Add("Text", publishersTable, "State");
-                        txtPubZip.DataBindings.Add("Text", publishersTable, "Zip");
-                        txtPubTelephone.DataBindings.Add("Text", publishersTable, "Telephone");
-                        txtPubFAX.DataBindings.Add("Text", publishersTable, "FAX");
-                        txtPubComments.DataBindings.Add("Text", publishersTable, "Comments");
-
-                        publishersManager = (CurrencyManager)
-                            this.BindingContext[publishersTable];
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show(ex.Message,
-                            "Error establishing Publishers table.",
-                            MessageBoxButtons.OK,
-                            MessageBoxIcon.Error);
-                        return;
-                    }
-                    
-                    
-                    this.Show();
-                    SetState("View");
-                }
+                publishersManager = (CurrencyManager)
+                    this.BindingContext[publishersTable];
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message,
+                    "Error establishing Publishers table.",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+                return;
+            }
+
+
+            this.Show();
+            SetState("View");
         }
+
 
         private void frmAuthors_FormClosing(object sender, FormClosingEventArgs e)
         {
