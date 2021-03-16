@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmTitles));
             this.label1 = new System.Windows.Forms.Label();
             this.txtTitle = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
@@ -60,11 +61,17 @@
             this.label8 = new System.Windows.Forms.Label();
             this.cboPublisher = new System.Windows.Forms.ComboBox();
             this.label9 = new System.Windows.Forms.Label();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.btnPublishers = new System.Windows.Forms.Button();
             this.lblTitle = new System.Windows.Forms.Label();
+            this.btnRecord = new System.Windows.Forms.Button();
+            this.btnAuthors = new System.Windows.Forms.Button();
+            this.picBooksTitle = new System.Windows.Forms.PictureBox();
+            this.picBooks = new System.Windows.Forms.PictureBox();
+            this.btnPrintTitles = new System.Windows.Forms.Button();
+            this.dlgPreview = new System.Windows.Forms.PrintPreviewDialog();
             this.grpFindTitle.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picBooksTitle)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picBooks)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -220,6 +227,7 @@
             this.txtISBN.ReadOnly = true;
             this.txtISBN.Size = new System.Drawing.Size(244, 20);
             this.txtISBN.TabIndex = 2;
+            this.txtISBN.Text = "_-_______-_-_";
             // 
             // label4
             // 
@@ -376,16 +384,6 @@
             this.label9.TabIndex = 29;
             this.label9.Text = "Publisher";
             // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Image = global::Chapter5_2_AuthorsTableInputForm.Properties.Resources.books;
-            this.pictureBox1.Location = new System.Drawing.Point(15, 12);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(100, 65);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox1.TabIndex = 14;
-            this.pictureBox1.TabStop = false;
-            // 
             // btnPublishers
             // 
             this.btnPublishers.Location = new System.Drawing.Point(263, 449);
@@ -407,11 +405,79 @@
             this.lblTitle.Text = "Titles Form";
             this.lblTitle.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
+            // btnRecord
+            // 
+            this.btnRecord.Location = new System.Drawing.Point(263, 478);
+            this.btnRecord.Name = "btnRecord";
+            this.btnRecord.Size = new System.Drawing.Size(75, 23);
+            this.btnRecord.TabIndex = 32;
+            this.btnRecord.TabStop = false;
+            this.btnRecord.Text = "Print &Record";
+            this.btnRecord.UseVisualStyleBackColor = true;
+            this.btnRecord.Click += new System.EventHandler(this.btnRecord_Click);
+            // 
+            // btnAuthors
+            // 
+            this.btnAuthors.Location = new System.Drawing.Point(141, 449);
+            this.btnAuthors.Name = "btnAuthors";
+            this.btnAuthors.Size = new System.Drawing.Size(75, 23);
+            this.btnAuthors.TabIndex = 33;
+            this.btnAuthors.TabStop = false;
+            this.btnAuthors.Text = "A&uthors";
+            this.btnAuthors.UseVisualStyleBackColor = true;
+            this.btnAuthors.Click += new System.EventHandler(this.btnAuthors_Click);
+            // 
+            // picBooksTitle
+            // 
+            this.picBooksTitle.Image = global::Chapter5_2_AuthorsTableInputForm.Properties.Resources.books;
+            this.picBooksTitle.Location = new System.Drawing.Point(15, 12);
+            this.picBooksTitle.Name = "picBooksTitle";
+            this.picBooksTitle.Size = new System.Drawing.Size(100, 65);
+            this.picBooksTitle.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.picBooksTitle.TabIndex = 14;
+            this.picBooksTitle.TabStop = false;
+            // 
+            // picBooks
+            // 
+            this.picBooks.Image = global::Chapter5_2_AuthorsTableInputForm.Properties.Resources.books_icon;
+            this.picBooks.Location = new System.Drawing.Point(344, 479);
+            this.picBooks.Name = "picBooks";
+            this.picBooks.Size = new System.Drawing.Size(24, 22);
+            this.picBooks.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.picBooks.TabIndex = 34;
+            this.picBooks.TabStop = false;
+            this.picBooks.Visible = false;
+            // 
+            // btnPrintTitles
+            // 
+            this.btnPrintTitles.Location = new System.Drawing.Point(141, 478);
+            this.btnPrintTitles.Name = "btnPrintTitles";
+            this.btnPrintTitles.Size = new System.Drawing.Size(75, 23);
+            this.btnPrintTitles.TabIndex = 35;
+            this.btnPrintTitles.TabStop = false;
+            this.btnPrintTitles.Text = "Print &Titles";
+            this.btnPrintTitles.UseVisualStyleBackColor = true;
+            this.btnPrintTitles.Click += new System.EventHandler(this.btnPrintTitles_Click);
+            // 
+            // dlgPreview
+            // 
+            this.dlgPreview.AutoScrollMargin = new System.Drawing.Size(0, 0);
+            this.dlgPreview.AutoScrollMinSize = new System.Drawing.Size(0, 0);
+            this.dlgPreview.ClientSize = new System.Drawing.Size(400, 300);
+            this.dlgPreview.Enabled = true;
+            this.dlgPreview.Icon = ((System.Drawing.Icon)(resources.GetObject("dlgPreview.Icon")));
+            this.dlgPreview.Name = "dlgPreview";
+            this.dlgPreview.Visible = false;
+            // 
             // frmTitles
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(476, 484);
+            this.ClientSize = new System.Drawing.Size(476, 556);
+            this.Controls.Add(this.btnPrintTitles);
+            this.Controls.Add(this.picBooks);
+            this.Controls.Add(this.btnAuthors);
+            this.Controls.Add(this.btnRecord);
             this.Controls.Add(this.lblTitle);
             this.Controls.Add(this.btnPublishers);
             this.Controls.Add(this.label9);
@@ -430,7 +496,7 @@
             this.Controls.Add(this.txtISBN);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.btnHelp);
-            this.Controls.Add(this.pictureBox1);
+            this.Controls.Add(this.picBooksTitle);
             this.Controls.Add(this.btnDone);
             this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.btnAddNew);
@@ -454,7 +520,8 @@
             this.Load += new System.EventHandler(this.frmAuthors_Load);
             this.grpFindTitle.ResumeLayout(false);
             this.grpFindTitle.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picBooksTitle)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picBooks)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -474,7 +541,7 @@
         private System.Windows.Forms.Button btnAddNew;
         private System.Windows.Forms.Button btnDelete;
         private System.Windows.Forms.Button btnDone;
-        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.PictureBox picBooksTitle;
         private System.Windows.Forms.HelpProvider hlpPublishers;
         private System.Windows.Forms.Button btnHelp;
         private System.Windows.Forms.Label label3;
@@ -497,6 +564,11 @@
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Button btnPublishers;
         private System.Windows.Forms.Label lblTitle;
+        private System.Windows.Forms.Button btnRecord;
+        private System.Windows.Forms.Button btnAuthors;
+        private System.Windows.Forms.PictureBox picBooks;
+        private System.Windows.Forms.Button btnPrintTitles;
+        private System.Windows.Forms.PrintPreviewDialog dlgPreview;
     }
 }
 

@@ -4,12 +4,12 @@
  */
 
 using System;
-using System.IO;
 using System.Data.SqlClient;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Printing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -30,6 +30,13 @@ namespace Chapter5_2_AuthorsTableInputForm
         CurrencyManager titlesManager;
         string myState;
         int myBookmark;
+
+        SqlCommand authorsCommand; 
+        SqlDataAdapter authorsAdapter;
+        DataTable[] authorsTable = new DataTable[4];
+
+        int pageNumber;
+        const int titlesPerPage = 45;
         public frmTitles()
         {
             InitializeComponent();
@@ -88,6 +95,17 @@ namespace Chapter5_2_AuthorsTableInputForm
                 cboPublisher.ValueMember = "PubID";
                 cboPublisher.DataBindings.Add("SelectedValue", titlesTable, "PubID");
 
+                authorsCommand = new SqlCommand("Select * from Authors ORDER BY Author",
+                    booksConnection);
+                authorsAdapter = new SqlDataAdapter();
+                authorsAdapter.SelectCommand = authorsCommand;
+                for (int i = 0; i < 4; i++)
+                {
+                    // establish author table/combo boxes to pick author 
+                    authorsTable[i] = new DataTable();
+                    authorsAdapter.Fill(authorsTable[i]);
+
+                }
             }
             catch (Exception ex)
             {
@@ -97,8 +115,6 @@ namespace Chapter5_2_AuthorsTableInputForm
                     MessageBoxIcon.Error);
                 return;
             }
-
-
             this.Show();
             SetState("View");
             SetText();
@@ -470,6 +486,154 @@ namespace Chapter5_2_AuthorsTableInputForm
             publishersCommand.Dispose();
             publishersAdapter.Dispose();
             publishersTable.Dispose();
+        }
+
+        private void btnAuthors_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                frmPublishers authorsForm = new frmPublishers();
+                string authorsSave = cboPublisher.Text;
+                authorsForm.ShowDialog();
+                authorsForm.Dispose();
+                // need to regenerate publishers data
+                booksConnection.Close();
+                booksConnection = new
+                SqlConnection("Data Source = (localdb)\\MSSQLLocalDB; " +
+                "AttachDbFilename=|DataDirectory|\\SQLBooksDB.mdf;" +
+                "Integrated Security=True;" +
+                "Connect Timeout=30;" +
+                "User Instance=False");
+                booksConnection.Open();
+                publishersAdapter.SelectCommand = publishersCommand;
+                publishersTable = new DataTable();
+                publishersAdapter.Fill(publishersTable);
+                cboPublisher.DataSource = publishersTable;
+                cboPublisher.Text = authorsSave;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message,
+                    "Error!",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnRecord_Click(object sender, EventArgs e)
+        {
+            //Declare the document
+            PrintDocument recordDocument;
+            recordDocument = new PrintDocument();
+            recordDocument.DocumentName = "Titles Record";
+            recordDocument.PrintPage += new PrintPageEventHandler(this.PrintRecordPage);
+            dlgPreview.Document = recordDocument;
+            dlgPreview.ShowDialog();
+            recordDocument.Print();
+            recordDocument.Dispose();
+        }
+        private void PrintRecordPage(object sender, PrintPageEventArgs e)
+        {
+            // print graphic
+            Pen myPen = new Pen(Color.Black, 3);
+            e.Graphics.DrawRectangle(myPen, 
+                e.MarginBounds.Left, 
+                e.MarginBounds.Top, 
+                e.MarginBounds.Width, 
+                100);
+            e.Graphics.DrawImage(picBooks.Image, 
+                e.MarginBounds.Left + 10, 
+                e.MarginBounds.Top + 10, 80, 80);
+            //Heading
+            string s = "BOOKS DATABASE";
+            Font myFont = new Font("Arial", 24, FontStyle.Bold);
+            SizeF sSize = e.Graphics.MeasureString(s, myFont);
+            e.Graphics.DrawString(s, 
+                myFont,
+                Brushes.Black, 
+                e.MarginBounds.Left + 100 + Convert.ToInt32(0.5 * (e.MarginBounds.Width - 100 - sSize.Width)), 
+                e.MarginBounds.Top + Convert.ToInt32(0.5 * (100 - sSize.Height)));
+            myFont = new Font("Arial", 12, FontStyle.Regular);
+            int y = 300;
+            int dy = Convert.ToInt32(e.Graphics.MeasureString("S", myFont).Height);
+            //Title
+            e.Graphics.DrawString("Title: " + txtTitle.Text, 
+                myFont, 
+                Brushes.Black, 
+                e.MarginBounds.Left, 
+                y);
+            y += 2 * dy; 
+            e.Graphics.DrawString("Author(s): ", 
+                myFont, 
+                Brushes.Black, 
+                e.MarginBounds.Left, y); 
+            /*int x = e.MarginBounds.Left + 
+                Convert.ToInt32(e.Graphics.MeasureString("Author(s): ", myFont).Width);
+            e.Graphics.DrawString("None", myFont, Brushes.Black, x, y);
+            y += dy;
+
+            x = e.MarginBounds.Left;
+            y += dy;
+            //Print Other Fields
+            e.Graphics.DrawString("Year Published: " + txtYear.Text,
+                myFont, Brushes.Black, x, y);
+            e.Graphics.DrawString("Publisher: " + cboPublisher.Text,
+                myFont, Brushes.Black, x, y); 
+            e.Graphics.DrawString("Description: " + txtDescription.Text, 
+                myFont, Brushes.Black, x, y); 
+            y += 2 * dy; e.Graphics.DrawString("Notes: " + txtNotes.Text, 
+                myFont, Brushes.Black, x, y); y += 2 * dy; 
+            e.Graphics.DrawString("Subject: " + txtSubject.Text, 
+                myFont, Brushes.Black, x, y); y += 2 * dy; 
+            e.Graphics.DrawString("Comments: " + txtComments.Text, 
+                myFont, Brushes.Black, x, y); e.HasMorePages = false;*/
+        }
+
+        private void btnPrintTitles_Click(object sender, EventArgs e)
+        {
+            pageNumber = 1;
+            btnFirst.PerformClick();
+            PrintDocument titlesDocument;
+            //Create Doc and Name
+            titlesDocument = new PrintDocument();
+            titlesDocument.DocumentName = "Titles Listing";
+            //Code Header
+            titlesDocument.PrintPage += new PrintPageEventHandler(this.PrintTitlesPage);
+            //Print Doc
+            dlgPreview.Document = titlesDocument;
+            dlgPreview.ShowDialog();
+
+            titlesDocument.Dispose();
+        }
+        private void PrintTitlesPage(object sender, PrintPageEventArgs e)
+        {
+            Font myFont = new Font("Courier New", 14, FontStyle.Bold);
+            e.Graphics.DrawString("Titles - Page " +
+                pageNumber.ToString(), myFont, Brushes.Black, e.MarginBounds.Left, e.MarginBounds.Top);
+            myFont = new Font("Courier New", 12, FontStyle.Underline);
+            int y = Convert.ToInt32(e.MarginBounds.Top + 50);
+            e.Graphics.DrawString("Title", myFont, Brushes.Black, e.MarginBounds.Left + Convert.ToInt32(0.6 * (e.MarginBounds.Width)), y);
+            y += Convert.ToInt32(2 * myFont.GetHeight());
+            myFont = new Font("Courier New", 12, FontStyle.Regular);
+            int iEnd = titlesPerPage * pageNumber;
+            if (iEnd > titlesTable.Rows.Count)
+            {
+                iEnd = titlesTable.Rows.Count;
+                e.HasMorePages = false;
+            }
+            else
+                e.HasMorePages = true;
+            for(int i = 1 + titlesPerPage * (pageNumber - 1); i <= iEnd; i++)
+            {
+                if(txtTitle.Text.Length < 35)
+                    e.Graphics.DrawString(txtTitle.Text, myFont, Brushes.Black, e.MarginBounds.Left, y);
+                else
+                    e.Graphics.DrawString(txtTitle.Text.Substring(0, 35), myFont, Brushes.Black, e.MarginBounds.Left, y);
+                if (e.HasMorePages)
+                    pageNumber++;
+                else
+                    pageNumber = 1;
+            }
         }
     }
 }
