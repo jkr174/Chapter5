@@ -31,9 +31,15 @@ namespace Chapter5_2_AuthorsTableInputForm
         string myState;
         int myBookmark;
 
+        ComboBox[] authorsCombo = new ComboBox[4];
         SqlCommand authorsCommand; 
         SqlDataAdapter authorsAdapter;
         DataTable[] authorsTable = new DataTable[4];
+
+        SqlCommand ISBNAuthorsCommand;
+        SqlDataAdapter ISBNAuthorsAdapter;
+        DataTable ISBNAuthorsTable;
+
 
         int pageNumber;
         const int titlesPerPage = 45;
@@ -94,6 +100,28 @@ namespace Chapter5_2_AuthorsTableInputForm
                 cboPublisher.DisplayMember = "Name";
                 cboPublisher.ValueMember = "PubID";
                 cboPublisher.DataBindings.Add("SelectedValue", titlesTable, "PubID");
+                // set up combo box array
+                authorsCombo[0] = cboAuthor1;
+                authorsCombo[1] = cboAuthor2;
+                authorsCombo[2] = cboAuthor3;
+                authorsCombo[3] = cboAuthor4;
+                authorsCommand = new SqlCommand("SELECT * " +
+                    "FROM Authors " +
+                    "ORDER BY Author", booksConnection);
+                authorsAdapter = new SqlDataAdapter();
+                authorsAdapter.SelectCommand = authorsCommand;
+                for (int i = 0; i < 4; i++)
+                {
+                    // establish author table/combo boxes to pick author
+                    authorsTable[i] = new DataTable();
+                    authorsAdapter.Fill(authorsTable[i]);
+                    authorsCombo[i].DataSource = authorsTable[i]; ;
+                    authorsCombo[i].DisplayMember = "Author";
+                    authorsCombo[i].ValueMember = "Au_ID";
+                    // set all to no selection
+                    authorsCombo[i].SelectedIndex = -1;
+                }
+
 
                 authorsCommand = new SqlCommand("Select * from Authors ORDER BY Author",
                     booksConnection);
@@ -118,6 +146,7 @@ namespace Chapter5_2_AuthorsTableInputForm
             this.Show();
             SetState("View");
             SetText();
+            GetAuthors();
 
         }
 
@@ -156,6 +185,16 @@ namespace Chapter5_2_AuthorsTableInputForm
                 publishersCommand.Dispose();
                 publishersAdapter.Dispose();
                 publishersTable.Dispose();
+                authorsCommand.Dispose();
+                authorsAdapter.Dispose();
+                authorsTable[0].Dispose();
+                authorsTable[1].Dispose();
+                authorsTable[2].Dispose();
+                authorsTable[3].Dispose();
+                ISBNAuthorsCommand.Dispose();
+                ISBNAuthorsAdapter.Dispose();
+                ISBNAuthorsTable.Dispose();
+
             }
         }
 
@@ -167,6 +206,7 @@ namespace Chapter5_2_AuthorsTableInputForm
             }
             titlesManager.Position--;
             SetText();
+            GetAuthors();
         }
 
         private void btnNext_Click(object sender, EventArgs e)
@@ -177,6 +217,7 @@ namespace Chapter5_2_AuthorsTableInputForm
             }
             titlesManager.Position++;
             SetText();
+            GetAuthors();
         }
 
         private void btnSave_Click(object sender, EventArgs e)
@@ -190,6 +231,27 @@ namespace Chapter5_2_AuthorsTableInputForm
             try
             {
                 titlesManager.EndCurrentEdit();
+                SqlCommandBuilder ISBNCommandUpdate = new SqlCommandBuilder(ISBNAuthorsAdapter);
+                // delete all rows of data table then repopulate
+                if (ISBNAuthorsTable.Rows.Count != 0)
+                {
+                    for (int i = 0; i < ISBNAuthorsTable.Rows.Count; i++)
+                    {
+                        ISBNAuthorsTable.Rows[i].Delete();
+                    }
+                    ISBNAuthorsAdapter.Update(ISBNAuthorsTable);
+                }
+                for (int i = 0; i < 4; i++)
+                {
+                    if (authorsCombo[i].SelectedIndex != -1)
+                    {
+                        ISBNAuthorsTable.Rows.Add();
+                        ISBNAuthorsTable.Rows[ISBNAuthorsTable.Rows.Count - 1]["ISBN"] = txtISBN.Text;
+                        ISBNAuthorsTable.Rows[ISBNAuthorsTable.Rows.Count - 1]["Au_ID"] =
+                        authorsCombo[i].SelectedValue;
+                    }
+                }
+                ISBNAuthorsAdapter.Update(ISBNAuthorsTable);
                 titlesTable.DefaultView.Sort = "Name";
                 savedRow = titlesTable.DefaultView.Find(savedName);
                 titlesManager.Position = savedRow;
@@ -238,6 +300,7 @@ namespace Chapter5_2_AuthorsTableInputForm
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
             }
+            GetAuthors();
         }
         private void SetState(string appState)
         {
@@ -291,6 +354,14 @@ namespace Chapter5_2_AuthorsTableInputForm
                     grpFindTitle.Enabled = true;
                     btnPublishers.Enabled = true;
                     cboPublisher.Enabled = false;
+                    cboAuthor1.Enabled = false;
+                    cboAuthor2.Enabled = false;
+                    cboAuthor3.Enabled = false;
+                    cboAuthor4.Enabled = false;
+                    btnXAuthor1.Enabled = false;
+                    btnXAuthor2.Enabled = false;
+                    btnXAuthor3.Enabled = false;
+                    btnXAuthor4.Enabled = false;
                     txtTitle.Focus();
                     break;
                 //Add or Edit State
@@ -325,6 +396,14 @@ namespace Chapter5_2_AuthorsTableInputForm
                     btnDone.Enabled = false;
                     grpFindTitle.Enabled = false;
                     cboPublisher.Enabled = true;
+                    cboAuthor1.Enabled = true;
+                    cboAuthor2.Enabled = true;
+                    cboAuthor3.Enabled = true;
+                    cboAuthor4.Enabled = true;
+                    btnXAuthor1.Enabled = true;
+                    btnXAuthor2.Enabled = true;
+                    btnXAuthor3.Enabled = true;
+                    btnXAuthor4.Enabled = true;
                     txtTitle.Focus();
                     break;
             }
@@ -332,6 +411,11 @@ namespace Chapter5_2_AuthorsTableInputForm
 
         private void btnAddNew_Click(object sender, EventArgs e)
         {
+            cboAuthor1.SelectedIndex = -1;
+            cboAuthor2.SelectedIndex = -1;
+            cboAuthor3.SelectedIndex = -1;
+            cboAuthor4.SelectedIndex = -1;
+
             try
             {
                 myBookmark = titlesManager.Position;
@@ -358,6 +442,7 @@ namespace Chapter5_2_AuthorsTableInputForm
             if (myState.Equals("Add"))
                 titlesManager.Position = myBookmark;
             SetState("View");
+            GetAuthors();
         }
 
         private void txtYearBorn_KeyPress(object sender, KeyPressEventArgs e)
@@ -380,6 +465,33 @@ namespace Chapter5_2_AuthorsTableInputForm
         {
             string message = "";
             bool allOK = true;
+            if (txtTitle.Text.Equals(""))
+            {
+                message = "You must input a Title.\r\n";
+                txtTitle.Focus();
+                allOK = false;
+            }
+            int inputYear, currentYear;
+            // Check length and range on Year Published
+            if (!txtYear.Text.Trim().Equals(""))
+            {
+                inputYear = Convert.ToInt32(txtYear.Text);
+                currentYear = DateTime.Now.Year;
+                if (inputYear > currentYear || inputYear < currentYear - 150)
+                {
+                    message += "Year published must be between " +
+                    (currentYear - 150).ToString() + " and " +
+                    currentYear.ToString() + "\r\n";
+                    txtYear.Focus();
+                    allOK = false;
+                }
+            }
+
+            if (!allOK)
+            {
+                MessageBox.Show(message, "Validation Error",
+                MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
             return (allOK);
         }
 
@@ -401,12 +513,14 @@ namespace Chapter5_2_AuthorsTableInputForm
         {
             titlesManager.Position = 0;
             SetText();
+            GetAuthors();
         }
 
         private void btnLast_Click(object sender, EventArgs e)
         {
             titlesManager.Position = titlesManager.Count - 1;
             SetText();
+            GetAuthors();
         }
 
         private void btnFind_Click(object sender, EventArgs e)
@@ -429,6 +543,7 @@ namespace Chapter5_2_AuthorsTableInputForm
                 titlesManager.Position = titlesTable.DefaultView.Find(foundRows[0]["Title"]);
             }
             SetText();
+            GetAuthors();
         }
         private void SetText()
         {
@@ -492,11 +607,15 @@ namespace Chapter5_2_AuthorsTableInputForm
         {
             try
             {
-                frmPublishers authorsForm = new frmPublishers();
-                string authorsSave = cboPublisher.Text;
+                frmAuthors authorsForm = new frmAuthors();
+                string[] authorsSave = new string[4];
+                authorsSave[0] = authorsCombo[0].Text;
+                authorsSave[1] = authorsCombo[1].Text;
+                authorsSave[2] = authorsCombo[2].Text;
+                authorsSave[3] = authorsCombo[3].Text;
                 authorsForm.ShowDialog();
                 authorsForm.Dispose();
-                // need to regenerate publishers data
+                // need to regenerate authors data
                 booksConnection.Close();
                 booksConnection = new
                 SqlConnection("Data Source = (localdb)\\MSSQLLocalDB; " +
@@ -505,11 +624,22 @@ namespace Chapter5_2_AuthorsTableInputForm
                 "Connect Timeout=30;" +
                 "User Instance=False");
                 booksConnection.Open();
-                publishersAdapter.SelectCommand = publishersCommand;
-                publishersTable = new DataTable();
-                publishersAdapter.Fill(publishersTable);
-                cboPublisher.DataSource = publishersTable;
-                cboPublisher.Text = authorsSave;
+                authorsAdapter.SelectCommand = authorsCommand;
+                for (int i = 0; i < 4; i++)
+                {
+                    authorsTable[i] = new DataTable();
+                    authorsAdapter.Fill(authorsTable[i]);
+                    authorsCombo[i].DataSource = authorsTable[i];
+                    if (!authorsSave[i].Equals(""))
+                    {
+                        authorsCombo[i].Text = authorsSave[i];
+                    }
+                    else
+                    {
+                        authorsCombo[i].SelectedIndex = -1;
+                    }
+
+                }
             }
             catch (Exception ex)
             {
@@ -635,5 +765,129 @@ namespace Chapter5_2_AuthorsTableInputForm
                     pageNumber = 1;
             }
         }
+        private void btnXAuthor_Click(object sender, EventArgs e)
+        {
+            Button whichButton = (Button)sender;
+            switch (whichButton.Name)
+            {
+                case "btnXAuthor1":
+                    cboAuthor1.SelectedIndex = -1;
+                    break;
+                case "btnXAuthor2":
+                    cboAuthor2.SelectedIndex = -1;
+                    break;
+                case "btnXAuthor3":
+                    cboAuthor3.SelectedIndex = -1;
+                    break;
+                case "btnXAuthor4":
+                    cboAuthor4.SelectedIndex = -1;
+                    break;
+            }
+        }
+        private void GetAuthors()
+        {
+            string SQLStatement = "SELECT Title_Author.* " +
+                "FROM Title_Author " +
+                "WHERE Title_Author.ISBN = '" + txtISBN.Text + "'";
+            for (int i = 0; i < 4; i++)
+            {
+                authorsCombo[i].SelectedIndex = -1;
+            }
+            // establish author table/combo boxes to pick author
+            ISBNAuthorsCommand = new SqlCommand(SQLStatement,
+            booksConnection);
+            ISBNAuthorsAdapter = new SqlDataAdapter();
+            ISBNAuthorsAdapter.SelectCommand = ISBNAuthorsCommand;
+            ISBNAuthorsTable = new DataTable();
+            ISBNAuthorsAdapter.Fill(ISBNAuthorsTable);
+            if (ISBNAuthorsTable.Rows.Count == 0)
+            {
+                return;
+            }
+            for (int i = 0; i < ISBNAuthorsTable.Rows.Count; i++)
+            {
+                authorsCombo[i].SelectedValue =
+                ISBNAuthorsTable.Rows[i]["Au_ID"].ToString();
+            }
+        }
+
+        private void cboPublisher_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if ((int)e.KeyChar == 13)
+            {
+                txtDescription.Focus();
+            }
+        }
+        private void cboAuthor_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            ComboBox whichComboBox = (ComboBox)sender;
+            switch (whichComboBox.Name)
+            {
+                case "cboAuthor1":
+                    cboAuthor2.Focus();
+                    break;
+                case "cboAuthor2":
+                    cboAuthor3.Focus();
+                    break;
+                case "cboAuthor3":
+                    cboAuthor4.Focus();
+                    break;
+                case "cboAuthor4":
+                    cboPublisher.Focus();
+                    break;
+            }
+        }
+        private void txtInput_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            TextBox whichTextBox = (TextBox)sender;
+            if ((int)e.KeyChar == 13)
+            {
+                switch (whichTextBox.Name)
+                {
+                    case "txtTitle":
+                        txtYear.Focus();
+                        break;
+                    case "txtYear":
+                        if (myState.Equals("Add"))
+                        {
+                            txtISBN.Focus();
+                        }
+                        else
+                        {
+                            cboAuthor1.Focus();
+                        }
+                        break;
+                    case "txtISBN":
+                        cboAuthor1.Focus();
+                        break;
+                    case "txtDescription":
+                        txtNotes.Focus();
+                        break;
+                    case "txtNotes":
+                        txtSubject.Focus();
+                        break;
+                    case "txtSubject":
+                        txtComments.Focus();
+                        break;
+                    case "txtComments":
+                        txtTitle.Focus();
+                        break;
+                }
+            }
+            if (whichTextBox.Name.Equals("txtYear"))
+            {
+                if ((e.KeyChar >= '0' && e.KeyChar <= '9') || (int)e.KeyChar == 8)
+                {
+                    e.Handled = false;
+                }
+                else
+                {
+                    Console.Beep();
+                    e.Handled = true;
+                }
+            }
+
+        }
+
     }
 }

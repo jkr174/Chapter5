@@ -22,3 +22,15 @@ C:\Users\romo1\OneDrive\Documents\GitHub\TitlesBranch3\Chapter5\Chapter5-2-Autho
 C:\Users\romo1\OneDrive\Documents\GitHub\TitlesBranch3\Chapter5\Chapter5-2-AuthorsTableInputForm\obj\Debug\Chapter5-2-AuthorsTableInputForm.pdb
 C:\Users\romo1\OneDrive\Documents\GitHub\TitlesBranch3\Chapter5\Chapter5-2-AuthorsTableInputForm\obj\Debug\Chapter5_2_AuthorsTableInputForm.frmAuthors.resources
 C:\Users\jromo021627\Documents\GitHub\Chapter5\Chapter5-2-AuthorsTableInputForm\obj\Debug\Chapter5_2_AuthorsTableInputForm.frmAuthors.resources
+F:\GitHub\MVC\Chapter5\Chapter5-2-AuthorsTableInputForm\bin\Debug\Chapter5-2-AuthorsTableInputForm.exe.config
+F:\GitHub\MVC\Chapter5\Chapter5-2-AuthorsTableInputForm\bin\Debug\Chapter5-2-AuthorsTableInputForm.exe
+F:\GitHub\MVC\Chapter5\Chapter5-2-AuthorsTableInputForm\bin\Debug\Chapter5-2-AuthorsTableInputForm.pdb
+F:\GitHub\MVC\Chapter5\Chapter5-2-AuthorsTableInputForm\obj\Debug\Chapter5-2-AuthorsTableInputForm.csprojAssemblyReference.cache
+F:\GitHub\MVC\Chapter5\Chapter5-2-AuthorsTableInputForm\obj\Debug\Chapter5_2_AuthorsTableInputForm.frmAuthors.resources
+F:\GitHub\MVC\Chapter5\Chapter5-2-AuthorsTableInputForm\obj\Debug\Chapter5_2_AuthorsTableInputForm.frmPublishers.resources
+F:\GitHub\MVC\Chapter5\Chapter5-2-AuthorsTableInputForm\obj\Debug\Chapter5_2_AuthorsTableInputForm.frmTitles.resources
+F:\GitHub\MVC\Chapter5\Chapter5-2-AuthorsTableInputForm\obj\Debug\Chapter5_2_AuthorsTableInputForm.Properties.Resources.resources
+F:\GitHub\MVC\Chapter5\Chapter5-2-AuthorsTableInputForm\obj\Debug\Chapter5-2-AuthorsTableInputForm.csproj.GenerateResource.cache
+F:\GitHub\MVC\Chapter5\Chapter5-2-AuthorsTableInputForm\obj\Debug\Chapter5-2-AuthorsTableInputForm.csproj.CoreCompileInputs.cache
+F:\GitHub\MVC\Chapter5\Chapter5-2-AuthorsTableInputForm\obj\Debug\Chapter5-2-AuthorsTableInputForm.exe
+F:\GitHub\MVC\Chapter5\Chapter5-2-AuthorsTableInputForm\obj\Debug\Chapter5-2-AuthorsTableInputForm.pdb
