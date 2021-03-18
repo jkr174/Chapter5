@@ -67,7 +67,6 @@
             this.btnAuthors = new System.Windows.Forms.Button();
             this.picBooksTitle = new System.Windows.Forms.PictureBox();
             this.picBooks = new System.Windows.Forms.PictureBox();
-            this.btnPrintTitles = new System.Windows.Forms.Button();
             this.dlgPreview = new System.Windows.Forms.PrintPreviewDialog();
             this.cboAuthor1 = new System.Windows.Forms.ComboBox();
             this.cboAuthor2 = new System.Windows.Forms.ComboBox();
@@ -81,6 +80,7 @@
             this.btnXAuthor2 = new System.Windows.Forms.Button();
             this.btnXAuthor3 = new System.Windows.Forms.Button();
             this.btnXAuthor4 = new System.Windows.Forms.Button();
+            this.btnPrintTitles = new System.Windows.Forms.Button();
             this.grpFindTitle.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picBooksTitle)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picBooks)).BeginInit();
@@ -118,11 +118,11 @@
             // 
             this.txtYear.BackColor = System.Drawing.Color.White;
             this.txtYear.Location = new System.Drawing.Point(112, 113);
+            this.txtYear.MaxLength = 4;
             this.txtYear.Name = "txtYear";
             this.txtYear.ReadOnly = true;
             this.txtYear.Size = new System.Drawing.Size(59, 20);
             this.txtYear.TabIndex = 1;
-            this.txtYear.MaxLength = 4;
             this.txtYear.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtInput_KeyPress);
             // 
             // btnPrevious
@@ -468,17 +468,6 @@
             this.picBooks.TabStop = false;
             this.picBooks.Visible = false;
             // 
-            // btnPrintTitles
-            // 
-            this.btnPrintTitles.Location = new System.Drawing.Point(141, 440);
-            this.btnPrintTitles.Name = "btnPrintTitles";
-            this.btnPrintTitles.Size = new System.Drawing.Size(75, 23);
-            this.btnPrintTitles.TabIndex = 35;
-            this.btnPrintTitles.TabStop = false;
-            this.btnPrintTitles.Text = "Print &Titles";
-            this.btnPrintTitles.UseVisualStyleBackColor = true;
-            this.btnPrintTitles.Click += new System.EventHandler(this.btnPrintTitles_Click);
-            // 
             // dlgPreview
             // 
             this.dlgPreview.AutoScrollMargin = new System.Drawing.Size(0, 0);
@@ -621,6 +610,17 @@
             this.btnXAuthor4.UseVisualStyleBackColor = true;
             this.btnXAuthor4.Click += new System.EventHandler(this.btnXAuthor_Click);
             // 
+            // btnPrintTitles
+            // 
+            this.btnPrintTitles.Location = new System.Drawing.Point(141, 440);
+            this.btnPrintTitles.Name = "btnPrintTitles";
+            this.btnPrintTitles.Size = new System.Drawing.Size(75, 23);
+            this.btnPrintTitles.TabIndex = 35;
+            this.btnPrintTitles.TabStop = false;
+            this.btnPrintTitles.Text = "Print &Titles";
+            this.btnPrintTitles.UseVisualStyleBackColor = true;
+            this.btnPrintTitles.Click += new System.EventHandler(this.btnPrintTitles_Click);
+            // 
             // frmTitles
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -731,7 +731,6 @@
         private System.Windows.Forms.Button btnRecord;
         private System.Windows.Forms.Button btnAuthors;
         private System.Windows.Forms.PictureBox picBooks;
-        private System.Windows.Forms.Button btnPrintTitles;
         private System.Windows.Forms.PrintPreviewDialog dlgPreview;
         private System.Windows.Forms.ComboBox cboAuthor1;
         private System.Windows.Forms.ComboBox cboAuthor2;
@@ -745,6 +744,7 @@
         private System.Windows.Forms.Button btnXAuthor2;
         private System.Windows.Forms.Button btnXAuthor3;
         private System.Windows.Forms.Button btnXAuthor4;
+        private System.Windows.Forms.Button btnPrintTitles;
     }
 }
 
