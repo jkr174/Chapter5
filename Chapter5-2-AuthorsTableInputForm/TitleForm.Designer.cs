@@ -69,6 +69,18 @@
             this.picBooks = new System.Windows.Forms.PictureBox();
             this.btnPrintTitles = new System.Windows.Forms.Button();
             this.dlgPreview = new System.Windows.Forms.PrintPreviewDialog();
+            this.cboAuthor1 = new System.Windows.Forms.ComboBox();
+            this.cboAuthor2 = new System.Windows.Forms.ComboBox();
+            this.cboAuthor3 = new System.Windows.Forms.ComboBox();
+            this.cboAuthor4 = new System.Windows.Forms.ComboBox();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
+            this.btnXAuthor1 = new System.Windows.Forms.Button();
+            this.btnXAuthor2 = new System.Windows.Forms.Button();
+            this.btnXAuthor3 = new System.Windows.Forms.Button();
+            this.btnXAuthor4 = new System.Windows.Forms.Button();
             this.grpFindTitle.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picBooksTitle)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picBooks)).BeginInit();
@@ -113,7 +125,7 @@
             // 
             // btnPrevious
             // 
-            this.btnPrevious.Location = new System.Drawing.Point(222, 362);
+            this.btnPrevious.Location = new System.Drawing.Point(222, 324);
             this.btnPrevious.Name = "btnPrevious";
             this.btnPrevious.Size = new System.Drawing.Size(75, 23);
             this.btnPrevious.TabIndex = 6;
@@ -124,7 +136,7 @@
             // 
             // btnNext
             // 
-            this.btnNext.Location = new System.Drawing.Point(303, 362);
+            this.btnNext.Location = new System.Drawing.Point(303, 324);
             this.btnNext.Name = "btnNext";
             this.btnNext.Size = new System.Drawing.Size(75, 23);
             this.btnNext.TabIndex = 7;
@@ -135,7 +147,7 @@
             // 
             // btnEdit
             // 
-            this.btnEdit.Location = new System.Drawing.Point(141, 391);
+            this.btnEdit.Location = new System.Drawing.Point(141, 353);
             this.btnEdit.Name = "btnEdit";
             this.btnEdit.Size = new System.Drawing.Size(75, 23);
             this.btnEdit.TabIndex = 8;
@@ -146,7 +158,7 @@
             // 
             // btnSave
             // 
-            this.btnSave.Location = new System.Drawing.Point(263, 391);
+            this.btnSave.Location = new System.Drawing.Point(263, 353);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(75, 23);
             this.btnSave.TabIndex = 9;
@@ -157,7 +169,7 @@
             // 
             // btnCancel
             // 
-            this.btnCancel.Location = new System.Drawing.Point(384, 391);
+            this.btnCancel.Location = new System.Drawing.Point(384, 353);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
             this.btnCancel.TabIndex = 10;
@@ -168,7 +180,7 @@
             // 
             // btnAddNew
             // 
-            this.btnAddNew.Location = new System.Drawing.Point(141, 420);
+            this.btnAddNew.Location = new System.Drawing.Point(141, 382);
             this.btnAddNew.Name = "btnAddNew";
             this.btnAddNew.Size = new System.Drawing.Size(75, 23);
             this.btnAddNew.TabIndex = 11;
@@ -179,7 +191,7 @@
             // 
             // btnDelete
             // 
-            this.btnDelete.Location = new System.Drawing.Point(263, 420);
+            this.btnDelete.Location = new System.Drawing.Point(263, 382);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(75, 23);
             this.btnDelete.TabIndex = 12;
@@ -190,7 +202,7 @@
             // 
             // btnDone
             // 
-            this.btnDone.Location = new System.Drawing.Point(384, 420);
+            this.btnDone.Location = new System.Drawing.Point(384, 382);
             this.btnDone.Name = "btnDone";
             this.btnDone.Size = new System.Drawing.Size(75, 23);
             this.btnDone.TabIndex = 13;
@@ -201,7 +213,7 @@
             // 
             // btnHelp
             // 
-            this.btnHelp.Location = new System.Drawing.Point(384, 449);
+            this.btnHelp.Location = new System.Drawing.Point(384, 411);
             this.btnHelp.Name = "btnHelp";
             this.btnHelp.Size = new System.Drawing.Size(75, 23);
             this.btnHelp.TabIndex = 15;
@@ -232,7 +244,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(12, 261);
+            this.label4.Location = new System.Drawing.Point(12, 223);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(60, 13);
             this.label4.TabIndex = 18;
@@ -241,7 +253,7 @@
             // txtDescription
             // 
             this.txtDescription.BackColor = System.Drawing.Color.White;
-            this.txtDescription.Location = new System.Drawing.Point(112, 258);
+            this.txtDescription.Location = new System.Drawing.Point(112, 220);
             this.txtDescription.Name = "txtDescription";
             this.txtDescription.ReadOnly = true;
             this.txtDescription.Size = new System.Drawing.Size(347, 20);
@@ -250,7 +262,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(12, 287);
+            this.label5.Location = new System.Drawing.Point(12, 249);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(35, 13);
             this.label5.TabIndex = 20;
@@ -259,7 +271,7 @@
             // txtNotes
             // 
             this.txtNotes.BackColor = System.Drawing.Color.White;
-            this.txtNotes.Location = new System.Drawing.Point(112, 284);
+            this.txtNotes.Location = new System.Drawing.Point(112, 246);
             this.txtNotes.Name = "txtNotes";
             this.txtNotes.ReadOnly = true;
             this.txtNotes.Size = new System.Drawing.Size(347, 20);
@@ -268,7 +280,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(12, 313);
+            this.label6.Location = new System.Drawing.Point(12, 275);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(43, 13);
             this.label6.TabIndex = 22;
@@ -277,7 +289,7 @@
             // txtSubject
             // 
             this.txtSubject.BackColor = System.Drawing.Color.White;
-            this.txtSubject.Location = new System.Drawing.Point(112, 310);
+            this.txtSubject.Location = new System.Drawing.Point(112, 272);
             this.txtSubject.Name = "txtSubject";
             this.txtSubject.ReadOnly = true;
             this.txtSubject.Size = new System.Drawing.Size(347, 20);
@@ -286,7 +298,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(12, 339);
+            this.label7.Location = new System.Drawing.Point(12, 301);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(56, 13);
             this.label7.TabIndex = 24;
@@ -295,7 +307,7 @@
             // txtComments
             // 
             this.txtComments.BackColor = System.Drawing.Color.White;
-            this.txtComments.Location = new System.Drawing.Point(112, 336);
+            this.txtComments.Location = new System.Drawing.Point(112, 298);
             this.txtComments.Name = "txtComments";
             this.txtComments.ReadOnly = true;
             this.txtComments.Size = new System.Drawing.Size(347, 20);
@@ -303,7 +315,7 @@
             // 
             // btnLast
             // 
-            this.btnLast.Location = new System.Drawing.Point(384, 362);
+            this.btnLast.Location = new System.Drawing.Point(384, 324);
             this.btnLast.Name = "btnLast";
             this.btnLast.Size = new System.Drawing.Size(75, 23);
             this.btnLast.TabIndex = 25;
@@ -314,7 +326,7 @@
             // 
             // btnFirst
             // 
-            this.btnFirst.Location = new System.Drawing.Point(141, 362);
+            this.btnFirst.Location = new System.Drawing.Point(141, 324);
             this.btnFirst.Name = "btnFirst";
             this.btnFirst.Size = new System.Drawing.Size(75, 23);
             this.btnFirst.TabIndex = 26;
@@ -328,7 +340,7 @@
             this.grpFindTitle.Controls.Add(this.btnFind);
             this.grpFindTitle.Controls.Add(this.txtFind);
             this.grpFindTitle.Controls.Add(this.label8);
-            this.grpFindTitle.Location = new System.Drawing.Point(12, 372);
+            this.grpFindTitle.Location = new System.Drawing.Point(12, 334);
             this.grpFindTitle.Name = "grpFindTitle";
             this.grpFindTitle.Size = new System.Drawing.Size(123, 100);
             this.grpFindTitle.TabIndex = 27;
@@ -370,7 +382,7 @@
             this.cboPublisher.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboPublisher.Enabled = false;
             this.cboPublisher.FormattingEnabled = true;
-            this.cboPublisher.Location = new System.Drawing.Point(112, 231);
+            this.cboPublisher.Location = new System.Drawing.Point(112, 193);
             this.cboPublisher.Name = "cboPublisher";
             this.cboPublisher.Size = new System.Drawing.Size(347, 21);
             this.cboPublisher.TabIndex = 28;
@@ -378,7 +390,7 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(12, 234);
+            this.label9.Location = new System.Drawing.Point(12, 196);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(50, 13);
             this.label9.TabIndex = 29;
@@ -386,7 +398,7 @@
             // 
             // btnPublishers
             // 
-            this.btnPublishers.Location = new System.Drawing.Point(263, 449);
+            this.btnPublishers.Location = new System.Drawing.Point(263, 411);
             this.btnPublishers.Name = "btnPublishers";
             this.btnPublishers.Size = new System.Drawing.Size(75, 23);
             this.btnPublishers.TabIndex = 30;
@@ -407,7 +419,7 @@
             // 
             // btnRecord
             // 
-            this.btnRecord.Location = new System.Drawing.Point(263, 478);
+            this.btnRecord.Location = new System.Drawing.Point(263, 440);
             this.btnRecord.Name = "btnRecord";
             this.btnRecord.Size = new System.Drawing.Size(75, 23);
             this.btnRecord.TabIndex = 32;
@@ -418,7 +430,7 @@
             // 
             // btnAuthors
             // 
-            this.btnAuthors.Location = new System.Drawing.Point(141, 449);
+            this.btnAuthors.Location = new System.Drawing.Point(141, 411);
             this.btnAuthors.Name = "btnAuthors";
             this.btnAuthors.Size = new System.Drawing.Size(75, 23);
             this.btnAuthors.TabIndex = 33;
@@ -440,7 +452,7 @@
             // picBooks
             // 
             this.picBooks.Image = global::Chapter5_2_AuthorsTableInputForm.Properties.Resources.books_icon;
-            this.picBooks.Location = new System.Drawing.Point(344, 479);
+            this.picBooks.Location = new System.Drawing.Point(344, 441);
             this.picBooks.Name = "picBooks";
             this.picBooks.Size = new System.Drawing.Size(24, 22);
             this.picBooks.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -450,7 +462,7 @@
             // 
             // btnPrintTitles
             // 
-            this.btnPrintTitles.Location = new System.Drawing.Point(141, 478);
+            this.btnPrintTitles.Location = new System.Drawing.Point(141, 440);
             this.btnPrintTitles.Name = "btnPrintTitles";
             this.btnPrintTitles.Size = new System.Drawing.Size(75, 23);
             this.btnPrintTitles.TabIndex = 35;
@@ -469,11 +481,147 @@
             this.dlgPreview.Name = "dlgPreview";
             this.dlgPreview.Visible = false;
             // 
+            // cboAuthor1
+            // 
+            this.cboAuthor1.BackColor = System.Drawing.Color.White;
+            this.cboAuthor1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboAuthor1.FormattingEnabled = true;
+            this.cboAuthor1.Location = new System.Drawing.Point(65, 139);
+            this.cboAuthor1.Name = "cboAuthor1";
+            this.cboAuthor1.Size = new System.Drawing.Size(121, 21);
+            this.cboAuthor1.TabIndex = 36;
+            // 
+            // cboAuthor2
+            // 
+            this.cboAuthor2.BackColor = System.Drawing.Color.White;
+            this.cboAuthor2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboAuthor2.FormattingEnabled = true;
+            this.cboAuthor2.Location = new System.Drawing.Point(65, 166);
+            this.cboAuthor2.Name = "cboAuthor2";
+            this.cboAuthor2.Size = new System.Drawing.Size(121, 21);
+            this.cboAuthor2.TabIndex = 37;
+            // 
+            // cboAuthor3
+            // 
+            this.cboAuthor3.BackColor = System.Drawing.Color.White;
+            this.cboAuthor3.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboAuthor3.FormattingEnabled = true;
+            this.cboAuthor3.Location = new System.Drawing.Point(313, 139);
+            this.cboAuthor3.Name = "cboAuthor3";
+            this.cboAuthor3.Size = new System.Drawing.Size(121, 21);
+            this.cboAuthor3.TabIndex = 38;
+            // 
+            // cboAuthor4
+            // 
+            this.cboAuthor4.BackColor = System.Drawing.Color.White;
+            this.cboAuthor4.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboAuthor4.FormattingEnabled = true;
+            this.cboAuthor4.Location = new System.Drawing.Point(313, 166);
+            this.cboAuthor4.Name = "cboAuthor4";
+            this.cboAuthor4.Size = new System.Drawing.Size(121, 21);
+            this.cboAuthor4.TabIndex = 39;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(12, 142);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(47, 13);
+            this.label10.TabIndex = 40;
+            this.label10.Text = "Author 1";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(12, 169);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(47, 13);
+            this.label11.TabIndex = 41;
+            this.label11.Text = "Author 2";
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(260, 142);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(47, 13);
+            this.label12.TabIndex = 42;
+            this.label12.Text = "Author 3";
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(260, 169);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(47, 13);
+            this.label13.TabIndex = 43;
+            this.label13.Text = "Author 4";
+            // 
+            // btnXAuthor1
+            // 
+            this.btnXAuthor1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnXAuthor1.Location = new System.Drawing.Point(192, 139);
+            this.btnXAuthor1.Name = "btnXAuthor1";
+            this.btnXAuthor1.Size = new System.Drawing.Size(19, 23);
+            this.btnXAuthor1.TabIndex = 44;
+            this.btnXAuthor1.TabStop = false;
+            this.btnXAuthor1.Text = "X";
+            this.btnXAuthor1.UseVisualStyleBackColor = true;
+            this.btnXAuthor1.Click += new System.EventHandler(this.btnXAuthor_Click);
+            // 
+            // btnXAuthor2
+            // 
+            this.btnXAuthor2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnXAuthor2.Location = new System.Drawing.Point(192, 166);
+            this.btnXAuthor2.Name = "btnXAuthor2";
+            this.btnXAuthor2.Size = new System.Drawing.Size(19, 23);
+            this.btnXAuthor2.TabIndex = 45;
+            this.btnXAuthor2.TabStop = false;
+            this.btnXAuthor2.Text = "X";
+            this.btnXAuthor2.UseVisualStyleBackColor = true;
+            this.btnXAuthor2.Click += new System.EventHandler(this.btnXAuthor_Click);
+            // 
+            // btnXAuthor3
+            // 
+            this.btnXAuthor3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnXAuthor3.Location = new System.Drawing.Point(440, 137);
+            this.btnXAuthor3.Name = "btnXAuthor3";
+            this.btnXAuthor3.Size = new System.Drawing.Size(19, 23);
+            this.btnXAuthor3.TabIndex = 46;
+            this.btnXAuthor3.TabStop = false;
+            this.btnXAuthor3.Text = "X";
+            this.btnXAuthor3.UseVisualStyleBackColor = true;
+            this.btnXAuthor3.Click += new System.EventHandler(this.btnXAuthor_Click);
+            // 
+            // btnXAuthor4
+            // 
+            this.btnXAuthor4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnXAuthor4.Location = new System.Drawing.Point(440, 164);
+            this.btnXAuthor4.Name = "btnXAuthor4";
+            this.btnXAuthor4.Size = new System.Drawing.Size(19, 23);
+            this.btnXAuthor4.TabIndex = 47;
+            this.btnXAuthor4.TabStop = false;
+            this.btnXAuthor4.Text = "X";
+            this.btnXAuthor4.UseVisualStyleBackColor = true;
+            this.btnXAuthor4.Click += new System.EventHandler(this.btnXAuthor_Click);
+            // 
             // frmTitles
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(476, 556);
+            this.ClientSize = new System.Drawing.Size(476, 482);
+            this.Controls.Add(this.btnXAuthor4);
+            this.Controls.Add(this.btnXAuthor3);
+            this.Controls.Add(this.btnXAuthor2);
+            this.Controls.Add(this.btnXAuthor1);
+            this.Controls.Add(this.label13);
+            this.Controls.Add(this.label12);
+            this.Controls.Add(this.label11);
+            this.Controls.Add(this.label10);
+            this.Controls.Add(this.cboAuthor4);
+            this.Controls.Add(this.cboAuthor3);
+            this.Controls.Add(this.cboAuthor2);
+            this.Controls.Add(this.cboAuthor1);
             this.Controls.Add(this.btnPrintTitles);
             this.Controls.Add(this.picBooks);
             this.Controls.Add(this.btnAuthors);
@@ -569,6 +717,18 @@
         private System.Windows.Forms.PictureBox picBooks;
         private System.Windows.Forms.Button btnPrintTitles;
         private System.Windows.Forms.PrintPreviewDialog dlgPreview;
+        private System.Windows.Forms.ComboBox cboAuthor1;
+        private System.Windows.Forms.ComboBox cboAuthor2;
+        private System.Windows.Forms.ComboBox cboAuthor3;
+        private System.Windows.Forms.ComboBox cboAuthor4;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Button btnXAuthor1;
+        private System.Windows.Forms.Button btnXAuthor2;
+        private System.Windows.Forms.Button btnXAuthor3;
+        private System.Windows.Forms.Button btnXAuthor4;
     }
 }
 
